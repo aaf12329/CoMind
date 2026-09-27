@@ -21,10 +21,13 @@ r"""
     这里没有时间循环 —— 注意力把整段序列的交互一次矩阵乘算完。
     这就是论文 Table 1 里 Self-Attention 那一行 O(1) 串行操作的代价。
 
-跑法:  D:\Anaconda\envs\imooc_ai\python.exe 04_mini_transformer.py
+跑法:  D:\Anaconda\envs\imooc_ai\python.exe 04_mini_transformer\04_mini_transformer.py
 预期:  梯度检查 < 1e-4(含 ReLU, 阈值放宽);  loss 从 2.56 降到 0.1 以下;
        逐字默写 "attention is all you need."
+产物:  本文件夹 figs/ 下生成 4 张参考图:
+       fig1 注意力热图(2层x4头) | fig2 架构图+因果mask | fig3 位置编码 | fig4 训练曲线
 """
+import os
 import numpy as np
 
 rng = np.random.default_rng(0)
@@ -225,6 +228,7 @@ def train(iters=4000):
     p = init_params()
     opt = Adam(p)
     print("V=%d, 瞎猜下限 ln(V) = %.3f" % (V, np.log(V)))
+    losses = []
     for it in range(1, iters + 1):
         s = rng.integers(0, len(data) - T - 1)
         chunk = encode(data[s:s + T + 1])
@@ -233,9 +237,10 @@ def train(iters=4000):
         grads = backward(p, out, caches)
         clip_grads(grads)
         opt.step(p, grads)
+        losses.append(out['loss'])
         if it % 250 == 0 or it == 1:
             print("step %5d  loss %.4f  ppl %.2f" % (it, out['loss'], np.exp(out['loss'])))
-    return p
+    return p, losses
 
 
 # ---------- 生成: 逐字符自回归, 每次只取最后一个位置的预测 ----------
@@ -250,13 +255,114 @@ def sample(p, seed="a", n=41):
     return seed + "".join(out)
 
 
+# ================= 参考图 =================
+def save_figures(p, losses):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
+    plt.rcParams["axes.unicode_minus"] = False
+
+    figdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figs")
+    os.makedirs(figdir, exist_ok=True)
+    labels = list(SENT)                  # 27 个字符
+
+    # ---- 图1: 注意力热图（2 层 x 4 头, 论文 Figure 3-5 的自制品） ----
+    out, caches = forward(p, encode(SENT))
+    fig, axes = plt.subplots(2, 4, figsize=(13.5, 6.8))
+    for l in range(NL):
+        A = caches[l]['A']               # (NH, L, L)
+        for hh in range(NH):
+            axx = axes[l][hh]
+            im = axx.imshow(A[hh], cmap="viridis", vmin=0, vmax=1,
+                            interpolation="nearest")
+            axx.set_xticks(range(len(labels)))
+            axx.set_yticks(range(len(labels)))
+            axx.set_xticklabels(labels, rotation=90, fontsize=5)
+            axx.set_yticklabels(labels, fontsize=5)
+            axx.set_title("layer %d  head %d" % (l, hh), fontsize=9)
+    fig.colorbar(im, ax=axes, shrink=0.62, label="注意力权重 0~1（每行和为1）")
+    fig.suptitle("训练后的注意力权重：行=当前字符(Q)，列=它看的字符(K)；"
+                 "右上角全黑 = 因果mask禁看未来", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig1_attention_heatmap.png"),
+                dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ---- 图2: 架构图 + 因果mask ----
+    fig, ax = plt.subplots(figsize=(8.6, 7.2))
+    ax.set_xlim(0, 10); ax.set_ylim(0, 13); ax.axis("off")
+
+    def rbox(cx, cy, bw, bh, text, fc, fs=10):
+        from matplotlib.patches import FancyBboxPatch
+        ax.add_patch(FancyBboxPatch((cx - bw / 2, cy - bh / 2), bw, bh,
+                                    boxstyle="round,pad=0.08", fc=fc, ec="#444444", lw=1.2))
+        ax.text(cx, cy, text, ha="center", va="center", fontsize=fs)
+
+    def arr(p1, p2, color="#3b6fd4", lw=1.8):
+        ax.annotate("", xy=p2, xytext=p1,
+                    arrowprops=dict(arrowstyle="->", color=color, lw=lw))
+
+    ax.text(3.4, 12.4, "输入：字符序列（一次性整段进入）", ha="center", fontsize=10)
+    rbox(3.4, 11.2, 4.6, 0.9, "Embedding 查表  13 → 64", "#dbe9ff")
+    rbox(3.4, 9.9, 4.6, 0.9, "+ 正弦位置编码（论文 3.5）", "#d6f0f7")
+    rbox(3.4, 7.6, 5.2, 2.6, "Block × 2\n\nLN → 多头注意力(4头, 因果mask) → ⊕残差\n\nLN → FFN(64→256→64, ReLU) → ⊕残差",
+         "#fff3d6", fs=9.5)
+    rbox(3.4, 5.3, 4.6, 0.9, "Linear  64 → 13", "#e4d9f7")
+    rbox(3.4, 4.0, 4.6, 0.9, "softmax → 每个位置的概率", "#ffd9d2")
+    rbox(3.4, 2.7, 4.6, 0.9, "取 argmax → 下一个字符", "#d9f2d9")
+    for y1, y2 in [(10.7, 10.42), (9.42, 9.05), (6.2, 5.85), (4.8, 4.52), (3.5, 3.22)]:
+        arr((3.4, y1), (3.4, y2))
+    arr((5.75, 7.6), (6.9, 7.6), "#3b6fd4", lw=1.4)
+    ax.text(7.0, 7.6, "对照 03_lstm:\n没有时间循环, 整段一次\n矩阵乘算完\n(论文 Table 1: 串行 O(1))",
+            fontsize=9, va="center", linespacing=1.5)
+    # 因果mask小图
+    axm = fig.add_axes([0.68, 0.62, 0.2, 0.24])
+    mask = np.triu(np.ones((len(labels), len(labels))), 1)
+    axm.imshow(1 - mask, cmap="gray", interpolation="nearest")
+    axm.set_title("因果mask\n白=可见 黑=禁看未来", fontsize=8)
+    axm.set_xticks([]); axm.set_yticks([])
+    ax.set_title("迷你 Transformer 架构（pre-LN 版）", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig2_architecture.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ---- 图3: 正弦位置编码 ----
+    fig, ax = plt.subplots(figsize=(7.2, 4.6))
+    im = ax.imshow(PE, aspect="auto", cmap="RdBu", vmin=-1, vmax=1, interpolation="nearest")
+    fig.colorbar(im, ax=ax, label="编码值")
+    ax.set_xlabel("编码维度 i")
+    ax.set_ylabel("位置 pos")
+    ax.set_title("正弦位置编码（论文 3.5 节公式）：每个位置一根独特的\"指纹\"")
+    fig.savefig(os.path.join(figdir, "fig3_positional_encoding.png"),
+                dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ---- 图4: 训练曲线 ----
+    steps = np.arange(1, len(losses) + 1)
+    losses = np.array(losses)
+    smooth = np.convolve(losses, np.ones(51) / 51, mode="valid")
+    fig, ax = plt.subplots(figsize=(7.0, 4.4))
+    ax.plot(steps, losses, color="#c44e52", alpha=0.25, lw=0.8)
+    ax.plot(steps[25:-25], smooth, color="#c44e52", lw=2, label="滑动平均(51步)")
+    ax.axhline(np.log(V), color="gray", ls="--", lw=1.4)
+    ax.text(3300, np.log(V) + 0.06, "瞎猜下限 ln(V) = %.3f" % np.log(V), fontsize=9, color="gray")
+    ax.set_yscale("log")
+    ax.set_xlabel("训练步数"); ax.set_ylabel("loss（对数轴）")
+    ax.set_title("Transformer 训练曲线（与 03 的 LSTM 同任务对照）")
+    ax.legend(fontsize=9); ax.grid(alpha=0.3)
+    fig.savefig(os.path.join(figdir, "fig4_loss_curve.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    print("参考图已生成 -> %s" % figdir)
+
+
 if __name__ == "__main__":
     p = init_params()
     worst = grad_check(p)
     print("grad check  max scaled error = %.2e" % worst)
     assert worst < 1e-4, "反向传播推错了!"
     print("grad check passed\n")
-    p = train()
+    p, losses = train()
     print("\ntarget      :", SENT.strip())
     print("from 'a'    :", sample(p).strip())
     print("from prefix :", sample(p, seed="attention is ").strip())
+    save_figures(p, losses)
