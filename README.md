@@ -21,6 +21,7 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 | 02_mlp | 多层感知机 | 两月牙二分类 | 隐层+非线性；链式法则跨层传递；Adam |
 | 03_lstm | LSTM（手推 BPTT） | 字符级语言模型 | 门控记忆；沿时间反传；梯度裁剪 |
 | 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | Q/K/V；因果 mask；注意力没有时间循环 |
+| 05_audio_models | 音频模型架构图（纯示意图，不训练） | —— | 声音的表示；WaveNet/RNN逐点/Tacotron2/HiFi-GAN/神经codec |
 
 ## 各模型参考图（figs/ 目录）
 
@@ -47,6 +48,14 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 - fig2_architecture.png 架构流程图 + 因果 mask 小图
 - fig3_positional_encoding.png 正弦位置编码矩阵（论文 3.5 公式的可视化）
 - fig4_loss_curve.png 训练曲线（与 03 同任务对照）
+
+**05_audio_models/figs/**（音频模型谱系，按编号即阅读顺序）
+- fig1_signal_forms.png 声音的四种形态：波形/频谱图/MFCC/token（频谱图是真算的）
+- fig2_wavenet.png WaveNet：膨胀因果卷积逐点拟合波形 + 门控 + skip 求和
+- fig3_rnn_pointwise.png SampleRNN/WaveRNN：RNN 系逐点生成
+- fig4_tacotron2.png Tacotron 2：LSTM 编码器-解码器 + 对齐带 + 声码器
+- fig5_hifi_gan.png HiFi-GAN：生成器 vs 双判别器的对抗训练
+- fig6_neural_codec_llm.png 现代路线：EnCodec 把声音变 token，Transformer 接手
 
 ## 贯穿全系列的三条军规
 
