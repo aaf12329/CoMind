@@ -13,8 +13,20 @@ r"""
     fig6  神经codec + LLM   声音 token 化后交给 Transformer
 
 跑法:  D:\Anaconda\envs\imooc_ai\python.exe 05_audio_models\05_audio_models.py
-产物:  本文件夹 figs/ 下 6 张 PNG。图里的波形/频谱/对齐带是真算的，
-       MFCC 和 token 网格是示意图（已注明）。
+产物:  本文件夹 figs/ 下 12 张 PNG（阅读顺序即编号）:
+       fig1  声音的四种形态 —— 所有语音模型的入口
+       fig2  WaveNet           膨胀因果卷积, 逐采样点拟合波形
+       fig3  SampleRNN/WaveRNN RNN 系逐点生成
+       fig4  Tacotron 2        LSTM 版语音合成经典双件套
+       fig5  HiFi-GAN          生成器画波形, 判别器挑刺
+       fig6  神经codec + LLM   声音 token 化后交给 Transformer
+       fig7  Whisper           多任务语音识别(转写/翻译/语种/时间戳)
+       fig8  wav2vec 2.0       自监督预训练, 零标注学会"听"
+       fig9  VITS              端到端语音合成(Piper 血统)
+       fig10 声音克隆三段式     GPT-SoVITS/CosyVoice/VALL-E 通用范式
+       fig11 MusicGen          文本→音乐(codec token + LM)
+       fig12 音频任务全景图     任务×输入形态×代表模型 收口
+图里的波形/频谱/对齐带是真算的, MFCC 和 token 网格是示意图（已注明）。
 """
 import os
 import numpy as np
@@ -255,6 +267,164 @@ def save_all():
             fontsize=9.5, linespacing=1.7)
     ax.set_title("现代路线：神经编解码器把声音变成 token，然后让 LLM \"说话\"", fontsize=12)
     fig.savefig(os.path.join(figdir, "fig6_neural_codec_llm.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig7 Whisper =================
+    fig, ax = plt.subplots(figsize=(11.5, 6.4))
+    ax.set_xlim(0, 13); ax.set_ylim(0, 7.2); ax.axis("off")
+    rbox(ax, 1.5, 6.1, 2.2, 0.85, "30秒音频窗口", "#dbe9ff", fs=9.5)
+    rbox(ax, 4.4, 6.1, 2.6, 0.85, "log-mel 频谱\n80 × 3000", "#d6f0f7", fs=9)
+    rbox(ax, 7.5, 6.1, 2.3, 0.85, "两层卷积\n（下采样）", "#d6f0f7", fs=9)
+    rbox(ax, 10.9, 6.1, 3.2, 0.9, "Transformer 编码器\n双向注意力，看整段", "#dbe9ff", fs=9)
+    arr(ax, (2.65, 6.1), (3.05, 6.1), "#666666")
+    arr(ax, (5.75, 6.1), (6.3, 6.1), "#666666")
+    arr(ax, (8.7, 6.1), (9.25, 6.1), "#666666")
+    rbox(ax, 3.4, 3.5, 3.6, 0.95, "已生成的 token 序列\n<转写><语种><时间戳> 特殊token开路", "#fff9c4", fs=8.5)
+    rbox(ax, 8.3, 3.5, 3.2, 0.9, "Transformer 解码器\n因果mask ＋ 交叉注意力", "#fff3d6", fs=9)
+    rbox(ax, 12.0, 3.5, 1.9, 0.9, "预测\n下一个token", "#d9f2d9", fs=9)
+    arr(ax, (5.25, 3.5), (6.65, 3.5), "#666666")
+    arr(ax, (9.95, 3.5), (11.0, 3.5), "#666666")
+    arr(ax, (10.9, 5.6), (9.2, 4.0), BLUE, lw=1.6)
+    ax.text(10.4, 4.75, "交叉注意力", fontsize=9, color=BLUE)
+    ax.text(0.3, 1.7, "一个模型包揽四件事：转写、翻译、语种识别、时间戳——全靠特殊 token 调度",
+            fontsize=10)
+    ax.text(0.3, 0.9, "68万小时弱监督音频预训练——“把规模卷到月亮上”的典型（OpenAI, 2022）",
+            fontsize=10)
+    ax.set_title("Whisper：音频→文字的多任务语音识别（编码器-解码器 + 特殊token）", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig7_whisper.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig8 wav2vec 2.0 =================
+    fig, ax = plt.subplots(figsize=(11.5, 6.2))
+    ax.set_xlim(0, 13); ax.set_ylim(0, 7); ax.axis("off")
+    rbox(ax, 1.4, 6.0, 2.0, 0.85, "原始波形", "#dbe9ff", fs=9.5)
+    rbox(ax, 4.2, 6.0, 2.7, 0.9, "卷积特征编码器\n直接吃波形，无标签", "#d6f0f7", fs=9)
+    rbox(ax, 7.4, 6.0, 2.2, 0.8, "特征序列", "#d6f0f7", fs=9.5)
+    rbox(ax, 10.8, 6.0, 3.0, 0.9, "Transformer\n上下文网络 C", "#dbe9ff", fs=9)
+    arr(ax, (2.45, 6.0), (2.8, 6.0), "#666666")
+    arr(ax, (5.6, 6.0), (6.25, 6.0), "#666666")
+    ax.text(6.35, 6.6, "随机mask一小段", fontsize=8.5, color="#666666")
+    arr(ax, (8.55, 6.0), (9.25, 6.0), "#666666")
+    rbox(ax, 7.4, 4.1, 2.2, 0.85, "量化网络\n→ 目标", "#fff9c4", fs=9)
+    arr(ax, (7.4, 5.55), (7.4, 4.58), "#666666")
+    rbox(ax, 11.0, 4.1, 2.9, 0.9, "对比损失：\n认出 mask 处的目标", "#ffd9d2", fs=9)
+    arr(ax, (10.8, 5.5), (11.6, 4.6), "#666666")
+    arr(ax, (8.55, 4.1), (9.5, 4.1), "#666666")
+    ax.text(0.3, 3.6, "预训练零标注：\n自己mask、自己出题、\n自己对答案（对比学习）",
+            fontsize=9.5, linespacing=1.6, va="top")
+    rbox(ax, 3.4, 2.0, 5.4, 0.85, "下游：接一个线性层微调 → 语音识别", "#d9f2d9", fs=9.5)
+    ax.text(0.3, 1.0, "标注数据少到 10 分钟级别，也能微调出可用的 ASR——低资源语言的救星",
+            fontsize=10)
+    ax.set_title("wav2vec 2.0：自监督预训练——先无标签学会“听”，再小数据微调", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig8_wav2vec2.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig9 VITS =================
+    fig, ax = plt.subplots(figsize=(12.2, 6.2))
+    ax.set_xlim(0, 14.6); ax.set_ylim(0, 7); ax.axis("off")
+    rbox(ax, 1.3, 6.0, 1.7, 0.8, "文本", "#ececec", fs=9.5)
+    rbox(ax, 4.0, 6.0, 2.7, 0.9, "文本编码器\n＋单调对齐搜索", "#dbe9ff", fs=9)
+    rbox(ax, 6.9, 6.0, 2.4, 0.9, "时长扩展\n（随机时长预测器）", "#d6f0f7", fs=9)
+    rbox(ax, 9.5, 6.0, 2.0, 0.8, "Flow 流模型", "#fff3d6", fs=9.5)
+    rbox(ax, 12.2, 6.0, 2.5, 0.9, "HiFi-GAN\n解码器", "#fff3d6", fs=9.5)
+    arr(ax, (2.2, 6.0), (2.6, 6.0), "#666666")
+    arr(ax, (5.4, 6.0), (5.6, 6.0), "#666666")
+    arr(ax, (8.15, 6.0), (8.45, 6.0), "#666666")
+    arr(ax, (10.55, 6.0), (10.9, 6.0), "#666666")
+    ax.text(13.55, 6.0, "波形", fontsize=10, va="center")
+    rbox(ax, 1.3, 3.4, 2.0, 0.85, "真实波形", "#d9f2d9", fs=9.5)
+    rbox(ax, 4.0, 3.4, 2.8, 0.9, "后验编码器\n（真 → z）", "#ececec", fs=9)
+    rbox(ax, 9.5, 3.4, 2.8, 0.9, "判别器\n（真假打分）", "#ececec", fs=9)
+    arr(ax, (2.35, 3.4), (2.55, 3.4), "#666666")
+    arr(ax, (4.6, 3.9), (9.2, 5.5), "#888888", lw=1.3, ls="--")
+    arr(ax, (9.6, 3.9), (11.7, 5.5), "#888888", lw=1.3, ls="--")
+    ax.text(6.7, 4.55, "灰色虚线模块只在训练时存在——推理时整个扔掉，所以快",
+            fontsize=9, color="#666666")
+    ax.text(0.3, 2.1, "端到端：一次前向直接出波形（对比 Tacotron 2 的两段式）",
+            fontsize=10)
+    ax.text(0.3, 1.3, "变分推断 ＋ 对抗训练双管齐下；Piper 的血统，手机都能跑",
+            fontsize=10)
+    ax.set_title("VITS：端到端语音合成——生成与判别一体，快而稳", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig9_vits.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig10 少样本声音克隆三段式 =================
+    fig, ax = plt.subplots(figsize=(11.8, 6.8))
+    ax.set_xlim(0, 13.8); ax.set_ylim(0, 7.6); ax.axis("off")
+    ax.text(0.35, 6.2, "① 注册声纹", fontsize=11, color="#8a1f1f", va="center")
+    rbox(ax, 3.0, 6.2, 2.6, 0.85, "参考音频\n3～10秒", "#dbe9ff", fs=9)
+    rbox(ax, 6.2, 6.2, 2.2, 0.8, "编码器", "#d6f0f7", fs=9.5)
+    rbox(ax, 9.9, 6.2, 3.0, 0.85, "音色/语义 参考token", "#fff9c4", fs=9)
+    arr(ax, (4.35, 6.2), (5.05, 6.2), "#666666")
+    arr(ax, (7.35, 6.2), (8.35, 6.2), "#666666")
+    ax.text(11.6, 6.2, "→ 声音的身份证", fontsize=9.5, va="center", color="#666666")
+    ax.text(0.35, 4.0, "② 生成", fontsize=11, color="#8a1f1f", va="center")
+    rbox(ax, 3.0, 4.0, 2.6, 0.85, "目标文本", "#ececec", fs=9.5)
+    rbox(ax, 9.9, 4.0, 3.2, 0.9, "LLM式自回归模型\n（GPT同款解码器）", "#fff3d6", fs=9)
+    arr(ax, (4.35, 4.0), (9.6, 4.0), "#666666", lw=1.4)
+    ax.text(6.6, 4.25, "文本与参考token一起送入", fontsize=8.5, color="#666666")
+    arr(ax, (9.9, 5.72), (9.9, 4.52), BLUE, lw=1.5)
+    ax.text(10.4, 5.1, "注入音色", fontsize=9, color=BLUE)
+    ax.text(0.35, 1.8, "③ 还原", fontsize=11, color="#8a1f1f", va="center")
+    rbox(ax, 9.9, 1.8, 2.6, 0.85, "流匹配 / 声码器", "#fff3d6", fs=9)
+    arr(ax, (9.9, 3.5), (9.9, 2.3), "#666666")
+    ax.text(10.4, 2.9, "语音token下发", fontsize=9, color="#666666")
+    rbox(ax, 12.35, 1.8, 1.9, 0.85, "克隆的\n波形", "#d9f2d9", fs=9)
+    arr(ax, (11.3, 1.8), (11.4, 1.8), "#666666")
+    ax.text(0.35, 0.75, "零训练拼装：三段全是现成模块；参考音频的质量＝克隆的上限（3秒起步，10秒更稳）",
+            fontsize=10)
+    ax.text(0.35, 0.2, "GPT-SoVITS / CosyVoice / VALL-E 都是这个范式",
+            fontsize=10)
+    ax.set_title("少样本声音克隆的三段式通用范式", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig10_voice_clone.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig11 MusicGen =================
+    fig, ax = plt.subplots(figsize=(11.5, 6.2))
+    ax.set_xlim(0, 13.5); ax.set_ylim(0, 7); ax.axis("off")
+    rbox(ax, 1.6, 6.0, 2.2, 0.8, "文字描述\n\"轻快的钢琴\"", "#dbe9ff", fs=9)
+    rbox(ax, 4.8, 6.0, 2.8, 0.85, "T5 / CLAP\n文本编码器", "#d6f0f7", fs=9)
+    arr(ax, (2.75, 6.0), (3.35, 6.0), "#666666")
+    arr(ax, (4.8, 5.52), (7.0, 4.75), "#666666")
+    ax.text(5.0, 5.05, "条件", fontsize=9, color="#666666")
+    rbox(ax, 1.6, 3.0, 2.4, 0.85, "可选提示旋律", "#ececec", fs=9)
+    rbox(ax, 4.8, 3.0, 2.6, 0.85, "EnCodec 编码\n→ 提示token", "#d6f0f7", fs=9)
+    arr(ax, (2.85, 3.0), (3.45, 3.0), "#666666")
+    arr(ax, (6.15, 3.3), (7.0, 4.1), "#666666")
+    rbox(ax, 8.6, 4.3, 3.4, 1.1, "单个 Transformer 语言模型\n4层码本交错建模（delay pattern）", "#fff9c4", fs=9)
+    rbox(ax, 12.3, 4.3, 2.0, 0.9, "EnCodec\n解码器", "#e4d9f7", fs=9.5)
+    arr(ax, (10.35, 4.6), (11.25, 4.6), "#666666")
+    ax.text(12.3, 5.5, "音乐", fontsize=10, va="center", ha="center")
+    ax.text(0.3, 1.6, "4层RVQ＝4个“声部”：第1层定主干，后3层补细节；delay pattern 把4层错开半拍，"
+                      "一个LM按顺序全管完", fontsize=10)
+    ax.text(0.3, 0.85, "30秒一段＋滑窗拼接可以无限长；文本条件决定风格、节奏与乐器",
+            fontsize=10)
+    ax.set_title("MusicGen：文本→音乐的生成路线（Meta）", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig11_musicgen.png"), dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+    # ================= fig12 音频任务全景 =================
+    fig, ax = plt.subplots(figsize=(12.0, 7.4))
+    ax.set_xlim(0, 13.5); ax.set_ylim(0, 8.6); ax.axis("off")
+    ax.text(2.4, 7.9, "任务", fontsize=12, ha="center", fontweight="bold")
+    ax.text(6.2, 7.9, "输入形态", fontsize=12, ha="center", fontweight="bold")
+    ax.text(10.4, 7.9, "代表模型（关键件）", fontsize=12, ha="center", fontweight="bold")
+    rows = [
+        ("语音识别 ASR", "频谱图", "Whisper、wav2vec2（编码器-解码器 / 自监督）", "#dbe9ff", "#e8f2ff", "#eef6ff"),
+        ("语音合成 TTS", "文本", "Tacotron2、VITS、Piper（编码-解码＋声码器）", "#d6f0f7", "#e2f5fa", "#eaf8fb"),
+        ("声音克隆", "文本＋参考音频", "VALL-E、GPT-SoVITS、CosyVoice（token语言模型）", "#fff9c4", "#fffbe0", "#fefae8"),
+        ("声音分类", "MFCC / 频谱图", "CNN、LSTM（你手搓的03加个分类头就能上）", "#ffd9d2", "#ffe8e4", "#ffefec"),
+        ("音乐生成", "文字描述", "MusicGen（codec token ＋ 语言模型）", "#e4d9f7", "#ece3fa", "#f1eafc"),
+    ]
+    ys = [6.7, 5.35, 4.0, 2.65, 1.3]
+    for (task, inp, mod, c1, c2, c3), y in zip(rows, ys):
+        rbox(ax, 2.4, y, 3.0, 0.95, task, c1, fs=10)
+        rbox(ax, 6.2, y, 2.4, 0.95, inp, c2, fs=9.5)
+        rbox(ax, 10.4, y, 5.6, 0.95, mod, c3, fs=9)
+    ax.text(0.3, 0.3, "万变不离其宗：① 声音先变成序列（频谱图或 token）→ ② Transformer 当主力加工"
+                      "→ ③ 最后都要一个声码器/解码器回到波形", fontsize=10.5)
+    ax.set_title("音频模型任务全景图（12张图到这里收口）", fontsize=12)
+    fig.savefig(os.path.join(figdir, "fig12_task_map.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
     print("参考图已生成 -> %s" % figdir)

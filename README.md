@@ -21,7 +21,7 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 | 02_mlp | 多层感知机 | 两月牙二分类 | 隐层+非线性；链式法则跨层传递；Adam |
 | 03_lstm | LSTM（手推 BPTT） | 字符级语言模型 | 门控记忆；沿时间反传；梯度裁剪 |
 | 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | Q/K/V；因果 mask；注意力没有时间循环 |
-| 05_audio_models | 音频模型架构图（纯示意图，不训练） | —— | 声音的表示；WaveNet/RNN逐点/Tacotron2/HiFi-GAN/神经codec |
+| 05_audio_models | 音频模型架构图（纯示意图，不训练） | —— | 声音表示 + 12 个模型/范式：WaveNet、RNN逐点、Tacotron2、HiFi-GAN、神经codec、Whisper、wav2vec2、VITS、声音克隆、MusicGen |
 
 ## 各模型参考图（figs/ 目录）
 
@@ -49,13 +49,19 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 - fig3_positional_encoding.png 正弦位置编码矩阵（论文 3.5 公式的可视化）
 - fig4_loss_curve.png 训练曲线（与 03 同任务对照）
 
-**05_audio_models/figs/**（音频模型谱系，按编号即阅读顺序）
+**05_audio_models/figs/**（音频模型全家福，12 张，编号即阅读顺序）
 - fig1_signal_forms.png 声音的四种形态：波形/频谱图/MFCC/token（频谱图是真算的）
 - fig2_wavenet.png WaveNet：膨胀因果卷积逐点拟合波形 + 门控 + skip 求和
 - fig3_rnn_pointwise.png SampleRNN/WaveRNN：RNN 系逐点生成
 - fig4_tacotron2.png Tacotron 2：LSTM 编码器-解码器 + 对齐带 + 声码器
 - fig5_hifi_gan.png HiFi-GAN：生成器 vs 双判别器的对抗训练
 - fig6_neural_codec_llm.png 现代路线：EnCodec 把声音变 token，Transformer 接手
+- fig7_whisper.png Whisper：多任务语音识别（转写/翻译/语种/时间戳，特殊token调度）
+- fig8_wav2vec2.png wav2vec 2.0：自监督预训练，零标注先学会"听"
+- fig9_vits.png VITS：端到端语音合成（Piper 血统），训练件与推理件分离
+- fig10_voice_clone.png 少样本声音克隆三段式（GPT-SoVITS/CosyVoice/VALL-E 通用范式）
+- fig11_musicgen.png MusicGen：文本→音乐（4层RVQ交错 + 单个LM）
+- fig12_task_map.png 任务全景图：任务×输入形态×代表模型收口
 
 ## 贯穿全系列的三条军规
 
