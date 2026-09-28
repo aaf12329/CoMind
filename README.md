@@ -22,6 +22,7 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 | 03_lstm | LSTM（手推 BPTT） | 字符级语言模型 | 门控记忆；沿时间反传；梯度裁剪 |
 | 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | Q/K/V；因果 mask；注意力没有时间循环 |
 | 05_audio_models | 音频模型架构图（纯示意图，不训练） | —— | 声音表示 + 12 个模型/范式：WaveNet、RNN逐点、Tacotron2、HiFi-GAN、神经codec、Whisper、wav2vec2、VITS、声音克隆、MusicGen |
+| 06_tree_models | 树模型家族（手搓 MiniCART，不用sklearn） | 两月牙分类 + 1D 回归 | 决策树/深度=复杂度；随机森林=Bagging降方差；GBDT=残差接力降偏差；XGBoost=二阶+正则+工程 |
 
 ## 各模型参考图（figs/ 目录）
 
@@ -62,6 +63,14 @@ D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.p
 - fig10_voice_clone.png 少样本声音克隆三段式（GPT-SoVITS/CosyVoice/VALL-E 通用范式）
 - fig11_musicgen.png MusicGen：文本→音乐（4层RVQ交错 + 单个LM）
 - fig12_task_map.png 任务全景图：任务×输入形态×代表模型收口
+
+**06_tree_models/figs/**（树模型家族，6 张；分类/回归树与集成全部纯 numpy 手搓，不依赖 sklearn）
+- fig1_decision_tree.png 决策树结构：以材料吸附为例的"连连提问"
+- fig2_depth_overfit.png 深度=复杂度旋钮：depth 1/3/12 的实测边界（欠拟合→刚好→过拟合）
+- fig3_random_forest.png 随机森林=Bagging：示意 + 单棵深树 vs 51棵森林的实测边界
+- fig4_gbdt_residual.png GBDT 残差接力：F0→+1棵→+20棵→+200棵 的实测拟合演化
+- fig5_xgboost.png XGBoost 给 GBDT 加了什么：二阶信息/显式正则/行列采样/工程优化 + 分裂增益公式
+- fig6_family_map.png 家族演化全景：CART→Bagging(随机森林/ExtraTrees) 与 Boosting(AdaBoost→GBDT→XGBoost/LightGBM/CatBoost)
 
 ## 贯穿全系列的三条军规
 
