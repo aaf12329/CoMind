@@ -28,11 +28,11 @@ C:\Users\Guards\.conda\envs\yolo\python.exe 01_linear_regression\01_linear_regre
 | 文件夹 | 模型 | 任务 | 两份代码教什么（框架差异） | 状态 |
 |---|---|---|---|---|
 | 01_linear_regression | 线性回归 | 拟合 y=3x+1+噪声 | autograd / GradientTape：反向传播交给框架的第一课；`.grad` 累加 vs 记录带新建 | ✅ |
-| 02_mlp | 多层感知机 | 两月牙二分类 | nn.Module / Keras 层封装；优化器接管更新 | 🔨 重建中 |
-| 03_lstm | LSTM | 字符级语言模型 | 框架自带的 RNN 层与手写 BPTT 的关系 | 🔨 重建中 |
-| 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | 注意力层的框架实现；因果 mask 怎么写 | 🔨 重建中 |
-| 05_audio_models | 音频模型架构 | 可运行骨架（不训练） | 把 12 个经典架构在两种框架里搭出来 | 🔨 重建中 |
-| 06_tree_models | 树模型家族 | 分类/回归 | 框架不是只能训神经网络：soft tree（可微版）与张量化经典算法 | 🔨 重建中 |
+| 02_mlp | 多层感知机 | 两月牙二分类 | nn.Module / Keras 层封装；优化器接管更新 | ✅ |
+| 03_lstm | LSTM | 字符级语言模型 | 框架自带的 RNN 层与手写 BPTT 的关系；门序重排的血泪教训 | ✅ |
+| 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | 注意力层的框架实现；因果 mask 怎么写；两家转置规矩相反 | ✅ |
+| 05_audio_models | 音频模型架构 | 可运行骨架（不训练） | 7 个骨架跑通 + 12 张图各标本框架实现 | ✅ |
+| 06_tree_models | 树模型家族 | 分类/回归 | 张量化 CART/森林/GBDT + 可微分软树（树也能梯度下降） | ✅ |
 
 ## 贯穿全系列的三条军规
 
