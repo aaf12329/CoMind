@@ -1,90 +1,63 @@
-# dl-from-scratch：从线性回归到 Transformer，纯 numpy 手搓
+# 机器学习基础：从线性回归到 Transformer，双框架对照版（PyTorch × TensorFlow）
 
+> 每个模型**两份代码**：PyTorch 版 + TensorFlow 版。同数据、同随机种子、同超参、同起点——
+> 数字对得上（收敛值一字不差），图能并排看（同名图放各自的 figs 目录）。
+> 两份代码的差别，恰好就是"两个框架的差别"。
+>
 > 配套阅读：论文《Attention Is All You Need》(arXiv:1706.03762)
-> 环境：只需要 numpy + matplotlib，无任何深度学习框架。
-> 每个模型一个文件夹（脚本 + figs/ 参考图 + 各自的 README.md 详解），每个脚本自包含、可单独运行。
-> **进每个文件夹先读它的 README.md**：是什么、干啥用、图怎么读、自测题都在里面。
+> 环境：conda 环境 `yolo`（已装 torch 2.11 + tensorflow 2.21；这些小题都跑 CPU）。
+> 每个模型一个文件夹；**进每个文件夹先读它的 README.md**：是什么、两份代码怎么对照、
+> 图怎么读、自测题都在里面。
 
 ## 运行方式
 
 ```bash
-D:\Anaconda\envs\imooc_ai\python.exe 01_linear_regression\01_linear_regression.py
+C:\Users\Guards\.conda\envs\yolo\python.exe 01_linear_regression\01_linear_regression_pytorch.py
+C:\Users\Guards\.conda\envs\yolo\python.exe 01_linear_regression\01_linear_regression_tensorflow.py
 ```
 
-每次运行会完整重训一遍模型，并**重新生成该文件夹 figs/ 下的全部参考图**——
-图不是贴上去的素材，全部由代码从真实训练中画出来，与代码永远同步。
+每次运行会完整重训一遍模型，并**重新生成对应 `figs_pytorch/` 或 `figs_tensorflow/`
+下的全部参考图**——图不是贴上去的素材，全部由代码从真实训练中画出来，与代码永远同步。
+
+> **重建说明**：本仓 1.0 是纯 numpy 手搓版（推导过程在 git 历史里，`git log` 可查）；
+> 2.0 起改为双框架对照版——numpy 版退役，但"手推公式 → 框架自动求导"的对照关系
+> 保留在每个脚本的头注释和 README 的对照表里。
 
 ## 路线图（一个模型一个 commit）
 
-| 文件夹 | 模型 | 任务 | 学到什么 |
-|---|---|---|---|
-| 01_linear_regression | 线性回归 | 拟合 y=3x+1+噪声 | 反向传播的种子：dL/dŷ = ŷ−y；数值梯度检查 |
-| 02_mlp | 多层感知机 | 两月牙二分类 | 隐层+非线性；链式法则跨层传递；Adam |
-| 03_lstm | LSTM（手推 BPTT） | 字符级语言模型 | 门控记忆；沿时间反传；梯度裁剪 |
-| 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | Q/K/V；因果 mask；注意力没有时间循环 |
-| 05_audio_models | 音频模型架构图（纯示意图，不训练） | —— | 声音表示 + 12 个模型/范式：WaveNet、RNN逐点、Tacotron2、HiFi-GAN、神经codec、Whisper、wav2vec2、VITS、声音克隆、MusicGen |
-| 06_tree_models | 树模型家族（手搓 MiniCART，不用sklearn） | 两月牙分类 + 1D 回归 | 决策树/深度=复杂度；随机森林=Bagging降方差；GBDT=残差接力降偏差；XGBoost=二阶+正则+工程 |
-
-## 各模型参考图（figs/ 目录）
-
-**01_linear_regression/figs/**
-- fig1_data_vs_fit.png 数据散点 + 真实线 + 拟合线
-- fig2_loss_curve.png loss 对数轴下降曲线
-- fig3_loss_surface_gd.png 损失面等高线 + 梯度下降轨迹（"下山"的具象化）
-- fig4_backprop_diagram.png 反向传播计算图：前向蓝、反向红，起点是损失
-
-**02_mlp/figs/**
-- fig1_moons_data.png 两月牙数据
-- fig2_decision_boundary.png MLP 弯边界 vs 线性直边界（同屏对照）
-- fig3_network_backprop.png 网络结构 + 反向传播链公式
-- fig4_loss_acc_curve.png loss/accuracy 双轴训练曲线
-
-**03_lstm/figs/**
-- fig1_lstm_cell.png LSTM 单元：传送带 c + 三个门开关
-- fig2_bptt_unroll.png 时间展开：前向实线、反向虚线（dh/dc 两条梯度流）
-- fig3_loss_curve.png 训练曲线 + 瞎猜下限 ln(V) 基准线
-- fig4_gates_heatmap.png 训练后三个门在整句话上的开合热图（96 维 × 27 字符）
-
-**04_mini_transformer/figs/**
-- fig1_attention_heatmap.png 训练后注意力权重（2 层 × 4 头，因果 mask 可见）——论文 Figure 3-5 的自制品
-- fig2_architecture.png 架构流程图 + 因果 mask 小图
-- fig3_positional_encoding.png 正弦位置编码矩阵（论文 3.5 公式的可视化）
-- fig4_loss_curve.png 训练曲线（与 03 同任务对照）
-
-**05_audio_models/figs/**（音频模型全家福，12 张，编号即阅读顺序）
-- fig1_signal_forms.png 声音的四种形态：波形/频谱图/MFCC/token（频谱图是真算的）
-- fig2_wavenet.png WaveNet：膨胀因果卷积逐点拟合波形 + 门控 + skip 求和
-- fig3_rnn_pointwise.png SampleRNN/WaveRNN：RNN 系逐点生成
-- fig4_tacotron2.png Tacotron 2：LSTM 编码器-解码器 + 对齐带 + 声码器
-- fig5_hifi_gan.png HiFi-GAN：生成器 vs 双判别器的对抗训练
-- fig6_neural_codec_llm.png 现代路线：EnCodec 把声音变 token，Transformer 接手
-- fig7_whisper.png Whisper：多任务语音识别（转写/翻译/语种/时间戳，特殊token调度）
-- fig8_wav2vec2.png wav2vec 2.0：自监督预训练，零标注先学会"听"
-- fig9_vits.png VITS：端到端语音合成（Piper 血统），训练件与推理件分离
-- fig10_voice_clone.png 少样本声音克隆三段式（GPT-SoVITS/CosyVoice/VALL-E 通用范式）
-- fig11_musicgen.png MusicGen：文本→音乐（4层RVQ交错 + 单个LM）
-- fig12_task_map.png 任务全景图：任务×输入形态×代表模型收口
-
-**06_tree_models/figs/**（树模型家族，6 张；分类/回归树与集成全部纯 numpy 手搓，不依赖 sklearn）
-- fig1_decision_tree.png 决策树结构：以材料吸附为例的"连连提问"
-- fig2_depth_overfit.png 深度=复杂度旋钮：depth 1/3/12 的实测边界（欠拟合→刚好→过拟合）
-- fig3_random_forest.png 随机森林=Bagging：示意 + 单棵深树 vs 51棵森林的实测边界
-- fig4_gbdt_residual.png GBDT 残差接力：F0→+1棵→+20棵→+200棵 的实测拟合演化
-- fig5_xgboost.png XGBoost 给 GBDT 加了什么：二阶信息/显式正则/行列采样/工程优化 + 分裂增益公式
-- fig6_family_map.png 家族演化全景：CART→Bagging(随机森林/ExtraTrees) 与 Boosting(AdaBoost→GBDT→XGBoost/LightGBM/CatBoost)
+| 文件夹 | 模型 | 任务 | 两份代码教什么（框架差异） | 状态 |
+|---|---|---|---|---|
+| 01_linear_regression | 线性回归 | 拟合 y=3x+1+噪声 | autograd / GradientTape：反向传播交给框架的第一课；`.grad` 累加 vs 记录带新建 | ✅ |
+| 02_mlp | 多层感知机 | 两月牙二分类 | nn.Module / Keras 层封装；优化器接管更新 | 🔨 重建中 |
+| 03_lstm | LSTM | 字符级语言模型 | 框架自带的 RNN 层与手写 BPTT 的关系 | 🔨 重建中 |
+| 04_mini_transformer | 迷你 Transformer | 同 03，对照实验 | 注意力层的框架实现；因果 mask 怎么写 | 🔨 重建中 |
+| 05_audio_models | 音频模型架构 | 可运行骨架（不训练） | 把 12 个经典架构在两种框架里搭出来 | 🔨 重建中 |
+| 06_tree_models | 树模型家族 | 分类/回归 | 框架不是只能训神经网络：soft tree（可微版）与张量化经典算法 | 🔨 重建中 |
 
 ## 贯穿全系列的三条军规
 
-1. **反向传播永远从损失开始**：前向的最后一个节点（损失）就是反向的第一个节点，
-   种子梯度对回归是 `ŷ−y`，对 softmax+交叉熵是 `p−onehot(y)`，一路乘回去。
-2. **手推的梯度必须过数值梯度检查**：用 `(L(θ+ε)−L(θ−ε))/2ε` 当质检员，
-   判据用"大梯度看相对、小梯度看绝对"：`|a−n|/max(1,|a|,|n|)`，
-   纯相对判据会在梯度≈0 的条目上假报（03 踩过的坑）。
+1. **反向传播永远从损失开始**：前向的最后一个节点（损失）就是反向的第一个节点。
+   种子梯度对回归是 `ŷ−y`，对 softmax+交叉熵是 `p−onehot(y)`——
+   手搓时代要亲手推导，框架时代藏在 `backward()` / `tape.gradient()` 里，
+   **不用写它，但必须知道它还在那儿**。
+2. **梯度永远可以被差分质疑**：用 `(L(θ+ε)−L(θ−ε))/2ε` 当质检员——
+   手搓时代查手推公式，双框架时代查 autograd / tape 的结果，每个章节都保留这个环节
+   （判据沿用"大梯度看相对、小梯度看绝对"，纯相对判据会在梯度≈0 的条目上假报）。
 3. **损失必须从 ln(V) 出发**：语言模型训练前 loss ≈ ln(词表大小) = 瞎猜水平，
    偏离这个起点说明前向有 bug。
+
+## 图怎么读
+
+每个模型有**两份同名参考图**（`figs_pytorch/` 与 `figs_tensorflow/`），并排看：
+
+- 能对上的是**数学**（loss 曲线几乎重合、收敛值一致）；
+- 对不上的地方是**工具的性格**（随机初始化、执行顺序、数值精度……）。
+
+各文件夹 README.md 里有逐张图的读法说明。
 
 ## 已知现象（不是 bug）
 
 - 04 从单字符 "a" 生成会得到相位偏移的句子（语料循环出现、训练块起点随机，
   模型无法区分这是句首的 a 还是 all 里的 a）；给全前缀 "attention is " 则确定性续写。
 - 训练曲线中途偶有回弹：每步是从语料里随机截的一段，难段 loss 天然高。
+- Windows 原生 TensorFlow 只有 CPU 版（GPU 仅 WSL2）；这些题很小，CPU 足够。
