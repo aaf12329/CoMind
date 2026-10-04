@@ -1,38 +1,214 @@
 # -*- coding: utf-8 -*-
 r"""
-05 音频模型架构参考图（纯示意图，不训练，几秒跑完）
-====================================================
-背景：上一轮聊"能拟合声音的模型"，这一批图把它们的架构画出来。
-配套阅读顺序 = 图的编号：
+05 音频模型架构 · TensorFlow 版 —— 可运行骨架 + 参考图
+=======================================================
+本版两块内容：
 
-    fig1  声音的四种形态 —— 所有语音模型的入口
-    fig2  WaveNet           膨胀因果卷积，逐采样点拟合波形
-    fig3  SampleRNN/WaveRNN RNN 系逐点生成
-    fig4  Tacotron 2        LSTM 版语音合成经典双件套
-    fig5  HiFi-GAN          生成器画波形，判别器挑刺
-    fig6  神经codec + LLM   声音 token 化后交给 Transformer
+  A. 【可运行骨架】把 12 张图里的代表架构，用 TensorFlow/Keras 真实搭出来并跑一次前向
+     （只验形状与连通性，不训练——这是本章的定位：认识架构，不是训练模型）：
+       WaveNet 膨胀因果卷积块 / SampleRNN-WaveRNN 的 GRU 逐点生成 /
+       Tacotron2 式编码器-注意力解码器 / HiFi-GAN 生成器+判别器 /
+       wav2vec2 式卷积特征+Transformer 编码器 / Whisper 式加解码器 /
+       神经 codec 的 token 网格 + GPT 式语言模型
+  B. 【参考图】与原版相同的 12 张架构图（fig1~fig12），每张图底部加一行
+     "TensorFlow 对应实现"——看图就知道这段架构落到哪个层。
 
-跑法:  D:\Anaconda\envs\imooc_ai\python.exe 05_audio_models\05_audio_models.py
-产物:  本文件夹 figs/ 下 12 张 PNG（阅读顺序即编号）:
-       fig1  声音的四种形态 —— 所有语音模型的入口
-       fig2  WaveNet           膨胀因果卷积, 逐采样点拟合波形
-       fig3  SampleRNN/WaveRNN RNN 系逐点生成
-       fig4  Tacotron 2        LSTM 版语音合成经典双件套
-       fig5  HiFi-GAN          生成器画波形, 判别器挑刺
-       fig6  神经codec + LLM   声音 token 化后交给 Transformer
-       fig7  Whisper           多任务语音识别(转写/翻译/语种/时间戳)
-       fig8  wav2vec 2.0       自监督预训练, 零标注学会"听"
-       fig9  VITS              端到端语音合成(Piper 血统)
-       fig10 声音克隆三段式     GPT-SoVITS/CosyVoice/VALL-E 通用范式
-       fig11 MusicGen          文本→音乐(codec token + LM)
-       fig12 音频任务全景图     任务×输入形态×代表模型 收口
-图里的波形/频谱/对齐带是真算的, MFCC 和 token 网格是示意图（已注明）。
+一个值得对照的细节（fig2）：
+    Keras 的 Conv1D 自带 padding="causal"（因果填充一个词搞定）；
+    PyTorch 的 Conv1d 没有这个选项，要 padding=d*(k-1) 后手动裁右端。
+    同一个"不许看未来"，两家一个词 vs 两行代码。
+
+跑法:  C:\Users\Guards\.conda\envs\yolo\python.exe 05_audio_models\05_audio_models_tensorflow.py
+产物:  本文件夹 figs_tensorflow/ 下 12 张 PNG（与 PyTorch 版同名，可并排对照）
 """
 import os
 import numpy as np
+import tensorflow as tf
+from tensorflow import keras
 
 rng = np.random.default_rng(7)
 
+
+# =========================================================================
+# A. 可运行骨架（TensorFlow / Keras）
+# =========================================================================
+
+def waved_conv(ch, dilation, k=2):
+    """一层膨胀因果卷积：Keras 自带 padding="causal"（PyTorch 需手动左填充）。"""
+    return keras.layers.Conv1D(2 * ch, k, dilation_rate=dilation, padding="causal")
+
+
+class WaveNetBlock:
+    """膨胀因果卷积块：因果卷积 + 门控 tanh⊙σ + skip 求和（fig2）。"""
+
+    def __init__(self, ch, dilations=(1, 2, 4)):
+        self.convs = [waved_conv(ch, d) for d in dilations]
+        self.proj = keras.layers.Conv1D(ch, 1)
+
+    def __call__(self, x):                          # x: (B, T, ch)（Keras 通道在后）
+        skip = 0
+        for conv in self.convs:
+            y = conv(x)
+            a, b = tf.split(y, 2, axis=-1)
+            x = x + self.proj(tf.math.tanh(a) * tf.math.sigmoid(b))   # 门控（LSTM 同款）
+            skip = skip + x
+        return x, skip
+
+
+class GRUPointwise:
+    """SampleRNN / WaveRNN 家族：GRU 记记忆，逐采样点预测下一档（fig3）。"""
+
+    def __init__(self, ch=32, bins=256):
+        self.gru = keras.layers.GRU(ch, return_sequences=True)
+        self.head = keras.layers.Dense(bins)
+
+    def __call__(self, x):                          # x: (B, T, 1) 原始波形采样点
+        return self.head(self.gru(x))               # (B, T, 256) 每点一个分布
+
+
+class Tacotron2Lite:
+    """Tacotron2 式：文字 → LSTM 编码器 → 注意力 → LSTM 解码器逐帧写频谱（fig4）。"""
+
+    def __init__(self, vocab=64, emb=32, hid=64, mel=80):
+        self.emb = keras.layers.Embedding(vocab, emb)
+        self.enc = keras.layers.LSTM(hid, return_sequences=True)
+        self.cell = keras.layers.LSTMCell(hid)
+        self.q = keras.layers.Dense(hid)
+        self.mel_out = keras.layers.Dense(mel)
+        self.h = tf.zeros((1, hid))                 # 解码器记忆从零出发
+        self.c = tf.zeros((1, hid))
+
+    def __call__(self, text_ids, n_steps=12):       # 演示：贪心走 12 帧
+        enc = self.enc(self.emb(text_ids))          # (B, L, hid)
+        frame = tf.zeros((1, 80))
+        outs = []
+        for _ in range(n_steps):
+            h, [self.h, self.c] = self.cell(frame, states=[self.h, self.c])   # 记忆带着走
+            att = tf.nn.softmax(self.q(h)[:, None, :] @ tf.transpose(enc, (0, 2, 1)) / 8.0, axis=-1)
+            frame = self.mel_out(tf.squeeze(att @ enc, 1))    # 上一步的帧接回解码器
+            outs.append(frame)
+        return tf.stack(outs, 1)                    # (B, n_steps, 80) 梅尔帧
+
+
+class HiFiGANLite:
+    """HiFi-GAN：生成器转置卷积上采样画波形；判别器多层卷积挑刺（fig5）。"""
+
+    def __init__(self, mel=80, up=8):
+        self.up_in = keras.layers.Conv1DTranspose(128, up * 2, strides=up, padding="same")
+        self.res = WaveNetBlock(128, dilations=(1, 3, 5))
+        self.up_out = keras.layers.Conv1DTranspose(1, 4, strides=2, padding="same")
+
+    def __call__(self, mel):                        # (B, T, 80) → (B, ~T*16, 1) 波形
+        x, _ = self.res(self.up_in(mel))
+        return self.up_out(x)
+
+
+class Discriminator:
+    """判别器（MSD 的简化骨架）：多分辨率卷积下采样 → 真/假打分。"""
+
+    def __init__(self):
+        self.net = keras.Sequential([
+            keras.layers.Conv1D(16, 15, strides=4, padding="same"), keras.layers.LeakyReLU(0.2),
+            keras.layers.Conv1D(32, 15, strides=4, padding="same"), keras.layers.LeakyReLU(0.2),
+            keras.layers.Conv1D(1, 15, padding="same")])
+
+    def __call__(self, wav):                        # (B,T,1) → (B,T/16,1) 逐段打分
+        return self.net(wav)
+
+
+class MHABlock:
+    """Transformer 块（后-LN 简化版）：多头注意力 + FFN。Keras 的参数顺序是 (Q,K,V)。"""
+
+    def __init__(self, d, heads=4):
+        self.mha = keras.layers.MultiHeadAttention(heads, d // heads)
+        self.ln1 = keras.layers.LayerNormalization(epsilon=1e-5)
+        self.ff = keras.layers.Dense(4 * d, activation="gelu")
+        self.ff2 = keras.layers.Dense(d)
+        self.ln2 = keras.layers.LayerNormalization(epsilon=1e-5)
+
+    def __call__(self, x, causal=False):
+        attn = self.mha(x, x, use_causal_mask=causal)     # 因果 mask 也是自带开关
+        x = self.ln1(x + attn)
+        return self.ln2(x + self.ff2(self.ff(x)))
+
+
+class Wav2Vec2Lite:
+    """wav2vec2 式：卷积特征编码器（直接吃波形）+ Transformer 上下文网络（fig8）。"""
+
+    def __init__(self, d=64):
+        self.feat = keras.Sequential([
+            keras.layers.Conv1D(32, 10, strides=5, padding="same"), keras.layers.Activation("gelu"),
+            keras.layers.Conv1D(d, 3, strides=2, padding="same"), keras.layers.Activation("gelu")])
+        self.blocks = [MHABlock(d) for _ in range(2)]
+
+    def __call__(self, wav):                        # (B,T,1) → (B,T',d) 上下文特征
+        x = self.feat(wav)
+        for blk in self.blocks:
+            x = blk(x)
+        return x
+
+
+class WhisperLite:
+    """Whisper 式：编码器吃整段频谱，解码器因果 mask + 交叉注意力出 token（fig7）。"""
+
+    def __init__(self, d=64, vocab=64):
+        self.enc_blocks = [MHABlock(d) for _ in range(2)]
+        self.self_attn = keras.layers.MultiHeadAttention(4, d // 4)    # 解码器自注意力
+        self.cross_attn = keras.layers.MultiHeadAttention(4, d // 4)   # 交叉注意力
+        self.ln = keras.layers.LayerNormalization(epsilon=1e-5)
+        self.ff = keras.layers.Dense(4 * d, activation="gelu")
+        self.ff2 = keras.layers.Dense(d)
+        self.out = keras.layers.Dense(vocab)
+
+    def __call__(self, mel_feats, token_emb):       # (B,Tm,d) + (B,Tt,d) → (B,Tt,vocab)
+        mem = mel_feats
+        for blk in self.enc_blocks:
+            mem = blk(mem)
+        h = self.self_attn(token_emb, token_emb, use_causal_mask=True)   # 不许偷看未来
+        h = self.ln(token_emb + h)
+        h = h + self.cross_attn(h, mem)              # 交叉注意力：看编码器的整段输出
+        h = h + self.ff2(self.ff(h))
+        return self.out(h)                           # (B,Tt,vocab)
+
+
+class CodecLM:
+    """神经 codec + LLM（fig6/fig11）：token 网格进 GPT 式解码器，预测下一个 token。"""
+
+    def __init__(self, codebook=1024, d=64):
+        self.emb = keras.layers.Embedding(codebook, d)
+        self.blocks = [MHABlock(d) for _ in range(2)]
+        self.head = keras.layers.Dense(codebook)
+
+    def __call__(self, token_ids):                  # (B, T) int → (B, T, codebook)
+        x = self.emb(token_ids)
+        for blk in self.blocks:
+            x = blk(x, causal=True)
+        return self.head(x)
+
+
+def demo_skeletons():
+    """跑一遍全部骨架，只验形状与连通性（不训练）。"""
+    x = tf.random.normal((1, 50, 16))              # 注意：Keras 通道在后 (B,T,C)
+    y, s = WaveNetBlock(16)(x)
+    print("WaveNetBlock  :", tuple(x.shape), "->", tuple(y.shape), "| skip", tuple(s.shape))
+    print("GRUPointwise  :", "波形(1,200,1) ->", tuple(GRUPointwise()(tf.random.normal((1, 200, 1))).shape))
+    print("Tacotron2Lite :", "text(1,7) ->", tuple(Tacotron2Lite()(tf.random.uniform((1, 7), 0, 40, tf.int32)).shape))
+    mel = tf.random.normal((1, 40, 80))
+    wav = HiFiGANLite()(mel)
+    print("HiFiGAN  G→D  :", "mel", tuple(mel.shape), "-> wav", tuple(wav.shape),
+          "-> score", tuple(Discriminator()(wav).shape))
+    print("Wav2Vec2Lite  :", "wav(1,1600,1) ->", tuple(Wav2Vec2Lite()(tf.random.normal((1, 1600, 1))).shape))
+    mem = tf.random.normal((1, 50, 64))
+    tok_emb = tf.random.normal((1, 6, 64))
+    print("WhisperLite   :", "mem(1,50,64)+tok(1,6,64) ->",
+          tuple(WhisperLite()(mem, tok_emb).shape))
+    print("CodecLM       :", "tokens(1,24) ->",
+          tuple(CodecLM()(tf.random.uniform((1, 24), 0, 1000, tf.int32)).shape))
+
+
+# =========================================================================
+# B. 参考图（与原版相同的 12 张；底部加一行本框架的对应实现）
+# =========================================================================
 
 def stft_mag(sig, nfft=256, hop=64):
     """手写 STFT 幅度谱，画频谱图用。"""
@@ -68,7 +244,7 @@ def save_all():
     plt.rcParams["font.sans-serif"] = ["Microsoft YaHei", "SimHei"]
     plt.rcParams["axes.unicode_minus"] = False
 
-    figdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figs")
+    figdir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figs_tensorflow")
     os.makedirs(figdir, exist_ok=True)
 
     def rbox(ax, cx, cy, bw, bh, text, fc, fs=10):
@@ -79,6 +255,10 @@ def save_all():
     def arr(ax, p1, p2, color="#3b6fd4", lw=1.7, ls="-"):
         ax.annotate("", xy=p2, xytext=p1,
                     arrowprops=dict(arrowstyle="->", color=color, lw=lw, linestyle=ls))
+
+    def fw(fig, note):
+        """底部一行：本图对应 TensorFlow 实现（PyTorch 版同一位置是对应 torch 层）。"""
+        fig.text(0.5, -0.015, "TensorFlow 对应实现：" + note, ha="center", fontsize=8.5, color="#555555")
 
     BLUE, GREEN, RED, ORANGE = "#3b6fd4", "#2e8b57", "#d4402e", "#e07b00"
 
@@ -120,6 +300,7 @@ def save_all():
     ax4.imshow(toks, aspect="auto", cmap="tab20", vmin=0, vmax=19, interpolation="nearest")
     ax4.set_xticks([]); ax4.set_yticks([])
     ax4.set_title("token 网格（示意）", fontsize=9)
+    fw(fig, "波形=裸张量；频谱=tf.signal.stft；四种形态只是张量的不同排法")
     fig.savefig(os.path.join(figdir, "fig1_signal_forms.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -153,6 +334,7 @@ def save_all():
     arr(ax, (8.7, 0.75), (5.5, 0.75), RED, lw=1.6, ls="--")
     ax.text(6.15, 1.02, "自回归：新点接回输入，逐点生成", fontsize=9, color=RED)
     ax.set_title("WaveNet：膨胀因果卷积逐点拟合波形（2016，谷歌助手早期的嗓子）", fontsize=12)
+    fw(fig, "Conv1D(dilation_rate=d, padding=\"causal\") 一个词搞定因果（torch 要手动裁）")
     fig.savefig(os.path.join(figdir, "fig2_wavenet.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -178,6 +360,7 @@ def save_all():
                       "WaveRNN：单个 GRU + 8bit 双分支，小到手机能跑",
             fontsize=9.5, linespacing=1.6)
     ax.set_title("RNN 系逐点生成：SampleRNN / WaveRNN —— 用记忆一步步\"念\"出波形", fontsize=12)
+    fw(fig, "keras.layers.GRU(return_sequences=True) + Dense(256)（骨架 GRUPointwise）")
     fig.savefig(os.path.join(figdir, "fig3_rnn_pointwise.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -210,6 +393,7 @@ def save_all():
     axc.set_xticks([]); axc.set_yticks([])
     axc.set_title("最终波形", fontsize=8.5)
     ax.set_title("Tacotron 2：LSTM 版语音合成的经典双件套（编码器-解码器 + 声码器）", fontsize=12)
+    fw(fig, "LSTM 编码器 + LSTMCell 逐帧解码 + 点积注意力（骨架 Tacotron2Lite）")
     fig.savefig(os.path.join(figdir, "fig4_tacotron2.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -238,6 +422,7 @@ def save_all():
     ax.text(7.6, 1.15, "对抗损失：生成器学着骗过两个判别器（另有特征匹配损失：中间特征也要像真的）",
             fontsize=9, color=RED, ha="center")
     ax.set_title("HiFi-GAN：生成器画波形，两个判别器挑刺（对抗训练，现在的主流声码器）", fontsize=12)
+    fw(fig, "生成器=Conv1DTranspose 上采样 + 膨胀残差块；判别器=Conv1D 堆叠（骨架 HiFiGANLite/Discriminator）")
     fig.savefig(os.path.join(figdir, "fig5_hifi_gan.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -266,6 +451,7 @@ def save_all():
     ax.text(1.6, 0.55, "VALL-E：3秒声音克隆\nMusicGen：文字→音乐\nChatGPT 语音模式：同一条 token 路",
             fontsize=9.5, linespacing=1.7)
     ax.set_title("现代路线：神经编解码器把声音变成 token，然后让 LLM \"说话\"", fontsize=12)
+    fw(fig, "codec=卷积降采样+量化（多为现成实现）；LM=Embedding + 因果 MultiHeadAttention（骨架 CodecLM）")
     fig.savefig(os.path.join(figdir, "fig6_neural_codec_llm.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -291,6 +477,7 @@ def save_all():
     ax.text(0.3, 0.9, "68万小时弱监督音频预训练——“把规模卷到月亮上”的典型（OpenAI, 2022）",
             fontsize=10)
     ax.set_title("Whisper：音频→文字的多任务语音识别（编码器-解码器 + 特殊token）", fontsize=12)
+    fw(fig, "MHABlock 编码器 + MultiHeadAttention(use_causal_mask=True) 自注意力 + 交叉注意力（骨架 WhisperLite）")
     fig.savefig(os.path.join(figdir, "fig7_whisper.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -316,6 +503,7 @@ def save_all():
     ax.text(0.3, 1.0, "标注数据少到 10 分钟级别，也能微调出可用的 ASR——低资源语言的救星",
             fontsize=10)
     ax.set_title("wav2vec 2.0：自监督预训练——先无标签学会“听”，再小数据微调", fontsize=12)
+    fw(fig, "Conv1D 特征编码器 + MHABlock 上下文网络（骨架 Wav2Vec2Lite）")
     fig.savefig(os.path.join(figdir, "fig8_wav2vec2.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -345,6 +533,7 @@ def save_all():
     ax.text(0.3, 1.3, "变分推断 ＋ 对抗训练双管齐下；Piper 的血统，手机都能跑",
             fontsize=10)
     ax.set_title("VITS：端到端语音合成——生成与判别一体，快而稳", fontsize=12)
+    fw(fig, "文本编码器≈LSTM/Transformer；Flow≈可逆网络（用现成实现）；解码器=HiFi-GAN 骨架")
     fig.savefig(os.path.join(figdir, "fig9_vits.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -376,6 +565,7 @@ def save_all():
     ax.text(0.35, 0.2, "GPT-SoVITS / CosyVoice / VALL-E 都是这个范式",
             fontsize=10)
     ax.set_title("少样本声音克隆的三段式通用范式", fontsize=12)
+    fw(fig, "三段全部可用 Keras 层组装：编码器 + CodecLM（骨架）+ 声码器")
     fig.savefig(os.path.join(figdir, "fig10_voice_clone.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -400,6 +590,7 @@ def save_all():
     ax.text(0.3, 0.85, "30秒一段＋滑窗拼接可以无限长；文本条件决定风格、节奏与乐器",
             fontsize=10)
     ax.set_title("MusicGen：文本→音乐的生成路线（Meta）", fontsize=12)
+    fw(fig, "条件编码=任意文本编码器（如 KerasHub 现成模型）；生成器=CodecLM 骨架")
     fig.savefig(os.path.join(figdir, "fig11_musicgen.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -424,6 +615,7 @@ def save_all():
     ax.text(0.3, 0.3, "万变不离其宗：① 声音先变成序列（频谱图或 token）→ ② Transformer 当主力加工"
                       "→ ③ 最后都要一个声码器/解码器回到波形", fontsize=10.5)
     ax.set_title("音频模型任务全景图（12张图到这里收口）", fontsize=12)
+    fw(fig, "“分类”一档：把 GRUPointwise 的 GRU 加 Dense(类别数) 就是分类器")
     fig.savefig(os.path.join(figdir, "fig12_task_map.png"), dpi=150, bbox_inches="tight")
     plt.close(fig)
 
@@ -431,4 +623,7 @@ def save_all():
 
 
 if __name__ == "__main__":
+    print("=== A. 可运行骨架（TensorFlow，只验形状不训练）===")
+    demo_skeletons()
+    print("\n=== B. 生成 12 张参考图 ===")
     save_all()
