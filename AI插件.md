@@ -2,7 +2,7 @@
 
 记录日期：2026-10-11。
 
-用于重装系统、重装 Agent 或换机器后恢复插件与工具配置。当前已整理 DeepSeek Harness，其他 Agent 的章节留空，后续直接补充。
+用于重装系统、重装 Agent 或换机器后恢复插件与工具配置。当前已整理 DeepSeek Harness 和 Codex，其他 Agent 的章节留空，后续直接补充。
 
 网站与软件入口见 [相关网站.md](相关网站.md)，编辑器扩展见 [VSCode插件清单.md](VSCode插件清单.md)。
 
@@ -161,15 +161,79 @@ npm install --global leantoken@0.1.28
 
 ## 2. Codex
 
-<!-- 留空：后续补充此 Agent 的实际插件、MCP、Skills、版本与恢复方式。 -->
+记录环境：Windows 上的 Codex 桌面会话，核对日期为 2026-10-11。以下依据本机配置、插件清单文件和本会话可用能力整理；版本是本机快照。本次核对安装记录，未逐项重新运行插件。
 
-| 插件 / 工具 | 地址 | 版本 | 用途 | 状态 / 恢复方式 |
-| --- | --- | --- | --- | --- |
-|  |  |  |  |  |
+### 本机配置中启用的插件（11 个）
+
+以下插件均在 `C:\Users\Guards\.codex\config.toml` 的 `[plugins."插件ID"]` 下记录了 `enabled = true`，并已核对本地 `.codex-plugin/plugin.json`。地址列提供官方使用或恢复入口；本机清单中部分仓库地址属于内部仓库，没有作为公开 GitHub 安装地址收录。
+
+| 插件 ID | 本机版本 | 用途 | 地址与恢复说明 |
+| --- | --- | --- | --- |
+| `codex-app-tools@openai-bundled` | `0.1.6` | Codex 应用内文件预览、Git 工作树、PR 附件、聊天管理、自动化与 LaTeX 编译等工具。 | [插件说明](https://developers.openai.com/plugins/quickstart)；应用集成工具，恢复后以应用提供的能力为准。 |
+| `browser@openai-bundled` | `26.1007.21434` | 浏览器操作相关能力，可用于页面检查、交互与本地网站验证。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复插件后核对浏览器工具是否可用。 |
+| `unified-computer-use@openai-bundled` | `26.1007.21434` | 应用管理的浏览器自动化运行时；本会话提供 `cua_repl`。 | [插件说明](https://developers.openai.com/plugins/quickstart)；运行时由应用提供。 |
+| `computer-use@openai-bundled` | `26.1007.21434` | Windows 桌面操作技能；具体可控范围取决于会话支持，本次未重新实测桌面操作。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复插件并检查其技能与运行时。 |
+| `code-review@openai-bundled` | `26.1007.21434` | PR/CI 相关能力；当前会话可查询 CI 检查诊断。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复插件后按需要连接仓库。 |
+| `visualize@openai-bundled` | `1.0.49` | 交互图表、流程图、模拟与 UI 预览，可辅助理解算法和工程结构。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 Visualize。 |
+| `documents@openai-primary-runtime` | `26.1009.11318` | 创建、编辑、渲染和验证 Word 文档。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 Documents。 |
+| `pdf@openai-primary-runtime` | `26.1009.11318` | PDF 读取、生成、页面渲染与版面检查。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 PDF。 |
+| `spreadsheets@openai-primary-runtime` | `26.1009.11318` | 表格生成、数据分析、公式与图表；另提供 Excel Live Control 技能。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 Spreadsheets；实时 Excel 操作需相应连接会话。 |
+| `presentations@openai-primary-runtime` | `26.1009.11318` | 演示文稿创建、编辑、渲染和检查。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 Presentations。 |
+| `template-creator@openai-primary-runtime` | `26.1009.11318` | 将参考文档、幻灯片或表格整理为可复用的个人模板技能。 | [插件说明](https://developers.openai.com/plugins/quickstart)；恢复 Template Creator。 |
+
+### 当前会话提供的其他插件（3 个）
+
+下列插件的 Skills/工具出现在本会话能力列表，本地也存在对应清单文件；未在上述本机配置中发现显式启用项，因此单独记录，不计入 11 个本机启用插件。
+
+| 插件 ID | 本地清单版本 | 用途 | 地址与恢复说明 |
+| --- | --- | --- | --- |
+| `plugin-management@openai-curated-remote` | `0.1.0` | 搜索插件、查看权限与依赖、管理连接。 | [插件说明](https://developers.openai.com/plugins/quickstart)；检查新会话是否提供 Plugin Management。 |
+| `sites@openai-curated-remote` | `1.0.1` | 构建、修改并部署托管网站。 | [插件说明](https://developers.openai.com/plugins/quickstart)；检查 Sites 技能与连接是否可用。 |
+| `work-pets@openai-curated-remote` | `0.1.6` | ChatGPT Work 动画宠物的创建、更新与管理。 | [插件说明](https://developers.openai.com/plugins/quickstart)；检查 Pets 技能与工具是否可用。 |
+
+此外，本地缓存中有 `openai-templates@openai-curated-remote` 的 `0.1.1` 清单，未确认本机启用或当前会话加载，仅作缓存记录。
+
+### 系统 Skills
+
+以下 4 个技能在本会话可用，本地位于 `C:\Users\Guards\.codex\skills\.system\`，未记录独立版本。它们由系统提供；插件附带的 Skills 已按上方插件归类。
+
+| Skill | 用途 | 地址与恢复说明 |
+| --- | --- | --- |
+| `openai-docs` | 查询 OpenAI/Codex 的配置、模型、API 和使用文档。 | [官方文档](https://developers.openai.com/)；检查系统技能是否提供。 |
+| `skill-creator` | 创建或更新自定义 `SKILL.md` 与辅助资源。 | [Skills 文档](https://learn.chatgpt.com/docs/build-skills)；检查系统技能是否提供。 |
+| `skill-installer` | 从精选列表或 GitHub 仓库安装技能。 | [Skills 文档](https://learn.chatgpt.com/docs/build-skills)；需要额外技能时由安装器处理。 |
+| `imagegen` | 生成或编辑图片，可用于工程文档插图和界面素材。 | [Skills 文档](https://learn.chatgpt.com/docs/build-skills)；检查技能及图片生成工具是否可用。 |
+
+同一系统目录还存在 `review-agent/SKILL.md`，但它未列入本会话可用技能，因此仅记录文件存在，不视为当前已加载。
+
+### MCP 与编程基础工具
+
+| 工具 / 服务 | 核对状态 | 用途与恢复方式 |
+| --- | --- | --- |
+| `node_repl` MCP | 本机配置存在 `[mcp_servers.node_repl]`，本会话有对应工具命名空间。 | 持久化 JavaScript 执行环境；换机器后需核对启动命令、运行时路径与环境配置，不能仅复制旧机器路径。[MCP 配置文档](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)。 |
+| 插件附带的 MCP | 随相应插件提供，可能不出现在独立的 `mcp_servers` 配置中。 | 例如 Codex App Tools、浏览器运行时和 Code Review；随插件恢复并检查工具可用性。[MCP 插件说明](https://learn.chatgpt.com/docs/extend/mcp?surface=cli)。 |
+| Shell、文件编辑与本地 Git | 当前会话可用。 | 执行 PowerShell、读取和修改代码、搜索文件、运行构建与测试、提交和推送仓库；属于运行环境基础工具。 |
+
+工程用途上，C/Python/JS/TS 的构建、测试和静态检查由项目工具链配合 Shell 执行；语言服务器、编译器和测试框架仍按项目安装。DSH 章节中的 Context7、Playwright、LeanToken 不代表已安装到 Codex。
 
 ### 环境与恢复记录
 
-<!-- 留空。 -->
+本机核对位置：
+
+- 配置：`C:\Users\Guards\.codex\config.toml`。
+- 插件缓存：`C:\Users\Guards\.codex\plugins\cache\<来源>\<插件>\<版本>\`。
+- 插件清单：缓存目录中的 `.codex-plugin\plugin.json`。
+- 系统技能：`C:\Users\Guards\.codex\skills\.system\`。
+
+恢复步骤：
+
+1. 安装并登录 Codex，按照上表插件 ID 和名称核对所需插件、技能与工具。目录插件可通过插件页面安装；应用集成能力以新版本实际提供的内容为准。[官方插件说明](https://developers.openai.com/plugins/quickstart)。
+2. 保留本清单中的 ID 和版本作为核对依据。缓存文件存在不等于已启用；不将缓存目录直接当作安装包。
+3. 将个人配置在本地备份，恢复时重新核对机器路径和 MCP 启动参数；账号凭据、密钥与带敏感环境变量的完整配置不随此公开仓库提交。
+4. 单独备份自己编写的 Skills。当前官方文档使用用户目录 `~/.agents/skills` 和项目目录 `.agents/skills` 发现自定义技能；本机 `.codex/skills/.system` 是系统技能位置。恢复到新版本时按其文档选择目录。[Skills 加载位置](https://learn.chatgpt.com/docs/build-skills)。
+5. 新开会话检查插件与技能是否出现；MCP 再核对服务能否启动、工具能否列出，并在实际项目中验证构建和测试命令。
+
+此处记录的是当前 Codex 环境，未新增安装插件或改动本机插件配置。
 
 ## 3. Claude Code
 
