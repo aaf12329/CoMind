@@ -1,98 +1,124 @@
 <div align="center">
 
-# 🗂️ Privacy_Skills_and_Prompt_SQL
+# 共知 · CoMind
 
-**个人笔记 + AI 项目协作参考 · 双区资料库**
+**个人知识、学习实践与 AI 协作参考库**
 
-*领到这个库的 AI：先读下面的导引区，再按需取文件。*
+保存我理解世界的过程，也为 AI 与我协作提供共同背景。
+
+*Personal knowledge, learning practice, and references for working with AI.*
 
 </div>
 
 ---
 
-## 🧭 导引区 · AI 先读这里（找资料按此路由）
+## 从这里开始 / Start here
+
+CoMind 既保存个人积累的笔记与学习实践，也保存供 AI 使用的背景、规范和工作方法。原 `Basic_Machine_Learning` 与 `Quick_deployment` 已归并到本仓库，分别保留独立目录及原提交历史。
+
+| 区域 | 内容 | 阅读方式 |
+|---|---|---|
+| [00_个人笔记](00_个人笔记/) | 私人学习笔记、前端整理与常用指令 | 所有者自用；AI 不主动读取，除非所有者点名 |
+| [01_AI项目协作参考](01_AI项目协作参考/) | 协作背景、代码规范、资料检索方法、项目接手手册 | AI 按下方导引按需读取 |
+| [Basic_Machine_Learning](Basic_Machine_Learning/README.md) | PyTorch × TensorFlow 双框架学习代码、原理说明与参考图 | 从子目录 README 选择主题，再进入各章节 |
+| [Quick_deployment](Quick_deployment/README.md) | 重装恢复、新机迁移、网站入口、VS Code 与 AI 工具插件清单 | 按恢复顺序查阅对应清单 |
+
+### 我现在要做什么？
+
+- **学习机器学习**：先读 [学习路线与运行方式](Basic_Machine_Learning/README.md)。覆盖线性回归、MLP、LSTM、迷你 Transformer、音频架构与树模型。
+- **重装系统或换电脑**：先读 [恢复流程](Quick_deployment/README.md)，再查 [相关网站](Quick_deployment/相关网站.md)、[VS Code 插件](Quick_deployment/VSCode插件清单.md) 和 [AI 插件](Quick_deployment/AI插件.md)。
+- **让 AI 接手工作**：先按下一节了解协作背景，再选取任务对应的规范与资料。
+
+## AI 导引 / References for AI
+
+只读取当前任务需要的材料，不把整个仓库一次性加载。个人笔记与供 AI 参考的资料仍保持各自的使用边界。
 
 | 你要做什么 / 找什么 | 去哪里 | 备注 |
 |---|---|---|
-| **了解所有者是谁、怎么配合**（AI 必读第一份） | [01_AI项目协作参考/用户个人信息参考/用户画像_协作偏好.md](01_AI项目协作参考/用户个人信息参考/用户画像_协作偏好.md) | ⚠️ 顶部带【请过滤本文件】标记：分享本库、批量喂给 AI、生成公开内容时**跳过整个文件**；AI 阅读时**跳过标记行即可、不必删除**（是否删除由所有者按需决定） |
-| **写代码、提交 commit**（每次动仓库前必读） | [01_AI项目协作参考/代码及路径的规范/代码规范.md](01_AI项目协作参考/代码及路径的规范/代码规范.md) | 按需读取入口：通用提交、工程/学习场景、对应语言与项目专项；不一次加载所有正文 |
-| **整理学习代码、算法示例或原理演示** | [01_AI项目协作参考/代码及路径的规范/学习资料代码规范.md](01_AI项目协作参考/代码及路径的规范/学习资料代码规范.md) | 原入口保留短跳转，正文在通用规范分类；独立示例、真实调用树与图文要求保留 |
-| **配 Python / conda 环境** | [00_个人笔记/conda常用指令.md](00_个人笔记/conda常用指令.md) + [01_AI项目协作参考/代码及路径的规范/conda路径注意事项.md](01_AI项目协作参考/代码及路径的规范/conda路径注意事项.md) | 路径正文已归入语言规范/Python；仅使用 conda 时读取；本机环境总表仍在桌面 |
-| **接手 / 新建一个项目** | [01_AI项目协作参考/多Agent合作项目及项目接手手册/项目接手手册_模板与写法.md](01_AI项目协作参考/多Agent合作项目及项目接手手册/项目接手手册_模板与写法.md) | 模板填空式：骨架抄 §2，实例抄 §3、§4 |
-| **调研 GitHub（Windows / Git Bash）** | [01_AI项目协作参考/信息搜索路径参考/GitHub搜索_问题与解决手法.md](01_AI项目协作参考/信息搜索路径参考/GitHub搜索_问题与解决手法.md) | curl+perl 手法、限流与降级 |
-| **找学术论文 / 拿全文** | [01_AI项目协作参考/信息搜索路径参考/学术检索_问题与获取路径.md](01_AI项目协作参考/信息搜索路径参考/学术检索_问题与获取路径.md) | Crossref 核实、机构库、付费墙合法获取 |
-| （所有者自用）TS/JS/CSS 整理 | [00_个人笔记/前端整合笔记_TS_JS_路线图_CSS选择器.md](00_个人笔记/前端整合笔记_TS_JS_路线图_CSS选择器.md) | 私人学习笔记，AI 无需主动读 |
+| 了解所有者背景与协作偏好 | [用户画像_协作偏好.md](01_AI项目协作参考/用户个人信息参考/用户画像_协作偏好.md) | 带【请过滤本文件】标记；分享、批量处理或生成公开材料时跳过整个文件。正常协作阅读时跳过标记行，不代删标记。 |
+| 写代码、整理仓库或提交 | [代码规范.md](01_AI项目协作参考/代码及路径的规范/代码规范.md) | 短路由入口；按任务选择通用提交规范、工程或学习场景，以及对应语言规范。 |
+| 整理算法示例或学习资料 | [学习资料代码规范.md](01_AI项目协作参考/代码及路径的规范/通用规范/学习资料代码规范.md) | 保留示例独立性、真实调用树、输入形状及代码与图文对应，不自动工程化。 |
+| 学习与比较机器学习实现 | [Basic_Machine_Learning/README.md](Basic_Machine_Learning/README.md) | 子目录有章节说明、两套实现与配套参考图；音频部分为架构学习骨架。 |
+| 恢复开发环境、编辑器或 AI 工具 | [Quick_deployment/README.md](Quick_deployment/README.md) | 清单中的版本与本机路径是历史快照，恢复时按新机器调整。 |
+| 配置 conda | [conda 路径注意事项](01_AI项目协作参考/代码及路径的规范/语言规范/Python/conda路径注意事项.md) | 仅使用 conda 时读取；环境以机器上的实际状态为准。 |
+| 接手或新建项目 | [项目接手手册](01_AI项目协作参考/多Agent合作项目及项目接手手册/项目接手手册_模板与写法.md) | 使用骨架与实例组织交接信息，具体项目状态以其仓库为准。 |
+| 调研 GitHub | [GitHub 搜索与排查](01_AI项目协作参考/信息搜索路径参考/GitHub搜索_问题与解决手法.md) | Windows / Git Bash 查询、限流与降级方法。 |
+| 找论文与全文 | [学术检索与获取路径](01_AI项目协作参考/信息搜索路径参考/学术检索_问题与获取路径.md) | 核实来源、机构库与合法全文获取。 |
 
-> 所有者的**思考类笔记**（《奇思妙想》《一种神奇的感觉》）与《个人环境配置总表》都在**桌面**，不在本库。
+思考类笔记与个人环境配置总表仍以所有者指定的位置为准，不因本次归并自动收入或读取。
 
----
-
-## 🗺️ 两区结构 · Layout
-
-| 区域 | 放什么 | 谁读 |
-|---|---|---|
-| **00_个人笔记/** | 所有者的私人学习笔记 | 所有者本人；**AI 不主动读、不当参考**（除非所有者点名） |
-| **01_AI项目协作参考/** | 给 AI 的全部参考材料：画像、代码规范、接手手册、技法 | 领到本库的 AI，按导引区取用 |
+## 目录结构 / Layout
 
 ```text
-Privacy_Skills_and_Prompt_SQL/
-├── README.md                     ← 你在这里（导引区在最上面）
-├── 00_个人笔记/                   🔴 所有者私人笔记（AI 不主动读）
-│   ├── 前端整合笔记_TS_JS_路线图_CSS选择器.md
-│   └── conda常用指令.md
-└── 01_AI项目协作参考/             🤖 AI 按导引区取用（四类）
-    ├── 代码及路径的规范/
-    │   ├── 代码规范.md             按任务与语言选择的短入口
-    │   ├── 学习资料代码规范.md     兼容入口
-    │   ├── conda路径注意事项.md    兼容入口
-    │   ├── 通用规范/
-    │   │   ├── 提交与协作规范.md
-    │   │   ├── 工程架构规范.md
-    │   │   └── 学习资料代码规范.md
-    │   ├── 语言规范/
-    │   │   ├── Python/            代码规范.md、conda路径注意事项.md
-    │   │   ├── JavaScript/        代码规范.md（读取入口）
-    │   │   ├── TypeScript/        代码规范.md（读取入口）
-    │   │   ├── PowerShell/        代码规范.md
-    │   │   └── Bash/              代码规范.md（读取入口）
-    │   └── 专项规范/
-    │       └── LLM_Agent项目规范.md
-    ├── 信息搜索路径参考/           GitHub搜索 · 学术检索
-    ├── 多Agent合作项目及项目接手手册/  项目接手手册_模板与写法
-    └── 用户个人信息参考/
-        └── 用户画像_协作偏好.md   ⚠️ 带过滤标记
+CoMind/
+├── README.md
+├── 00_个人笔记/                         所有者自用
+├── 01_AI项目协作参考/                   AI 按任务取用
+│   ├── 代码及路径的规范/
+│   │   ├── 代码规范.md                  规范路由
+│   │   ├── 学习资料代码规范.md          兼容入口
+│   │   ├── conda路径注意事项.md         兼容入口
+│   │   ├── 通用规范/                    提交、工程、学习资料
+│   │   ├── 语言规范/                    Python、JS、TS、PowerShell、Bash
+│   │   └── 专项规范/                    LLM / Agent
+│   ├── 信息搜索路径参考/
+│   ├── 多Agent合作项目及项目接手手册/
+│   └── 用户个人信息参考/                分享时遵守文件过滤标记
+├── Basic_Machine_Learning/
+│   ├── README.md
+│   ├── Create-Venv.ps1                  自选 Python，在本目录创建 .venv
+│   ├── 01_linear_regression/
+│   ├── 02_mlp/
+│   ├── 03_lstm/
+│   ├── 04_mini_transformer/
+│   ├── 05_audio_models/
+│   └── 06_tree_models/
+│       各章节分别保留代码、README、figs_pytorch/ 和 figs_tensorflow/
+└── Quick_deployment/
+    ├── README.md
+    ├── 相关网站.md
+    ├── VSCode插件清单.md
+    └── AI插件.md
 ```
 
----
+## 获取与使用 / Get the repository
 
-## 📏 规则 · Ground Rules（红线，AI 与所有者都遵守）
+```powershell
+git clone https://github.com/aaf12329/CoMind.git
+cd CoMind
+```
 
-1. **身份过滤**：commit 信息与提交的文件内容都不得含真实姓名、学校/单位、地理位置等
-   身份信息；**健康细节可写入与提交**（2026-10-06 所有者明确）。
-2. **画像过滤标记**：`用户画像_协作偏好.md` 顶部的【请过滤本文件】行——分享本库、批量
-   喂给 AI、生成公开内容时跳过该文件；正常阅读跳过标记行即可，**是否删除标记行是所有者
-   的个人选择（有需要时才删），AI 不代删**。
-3. **push 归所有者本人执行**（除非所有者明确让 AI 代推）。
-4. **本库不抄作模板**：两区内容均为个人化材料，勿当通用模板复制。
-5. **结构变动同步本 README**：移动/增删文件后，导引区与目录树必须一起改。
+机器学习示例的命令以 `Basic_Machine_Learning/` 为工作目录。使用 [Create-Venv.ps1](Basic_Machine_Learning/Create-Venv.ps1) 选择本机 Python，在 **`Basic_Machine_Learning/.venv/`** 创建环境，再自行安装相应依赖。脚本不下载 Python 或自动安装框架；具体参数见 [学习资料 README](Basic_Machine_Learning/README.md)。运行学习脚本可能重新生成章节中的参考图。
 
----
+```powershell
+cd Basic_Machine_Learning
+powershell -NoProfile -ExecutionPolicy Bypass -File ./Create-Venv.ps1
+# 自行安装对应依赖后：
+./.venv/Scripts/python.exe 01_linear_regression/01_linear_regression_pytorch.py
+```
 
-## 📖 AI 首读顺序（建议）
+部署资料从 [Quick_deployment/README.md](Quick_deployment/README.md) 开始。账号凭据、完整私有配置、模型及数据集按各项目自己的要求另行备份和恢复。
 
-1. [用户画像_协作偏好.md](01_AI项目协作参考/用户个人信息参考/用户画像_协作偏好.md)（阅读时跳过顶部标记行即可，**无需删除**）
-2. [代码规范.md](01_AI项目协作参考/代码及路径的规范/代码规范.md) 的短路由；修改仓库时读取通用提交规范
-3. 按工程/学习场景和实际语言取用正文；LLM / Agent 专项仅在相关项目中读取
+## 归并记录 / Consolidation
 
-学习资料任务必须另读《学习资料代码规范.md》：只参考通用规范的文件内模块组织与注释方式，
-不自动引入 common 共用层、跨文件依赖、统一工程入口或测试流水线。
-代码文件开头必须注释函数结构与真实调用树；README 等说明文档必须画出输入数据结构与形状、
-代码结构与调用树，并将原理步骤对应到实际函数或库接口。当前任务的明确要求优先。
+2026-10-18 起，以 [CoMind](https://github.com/aaf12329/CoMind) 为统一入口：
 
----
+| 原仓库 | 本库位置 | 归并时的源版本 |
+|---|---|---|
+| [Basic_Machine_Learning](https://github.com/aaf12329/Basic_Machine_Learning) | [Basic_Machine_Learning/](Basic_Machine_Learning/README.md) | `7cb9cb1` |
+| [Quick_deployment](https://github.com/aaf12329/Quick_deployment) | [Quick_deployment/](Quick_deployment/README.md) | `6bb8778` |
 
-*2026-10-06 重写以匹配两区结构（00_个人笔记 / 01_AI项目协作参考）；结构有变直接改本文件的导引区与目录树。*
+保留原项目的目录结构、学习代码、配套图文和提交历史。后续统一在本库对应目录维护；原仓库链接用于追溯来源。本次归并只更新资料组织、导航及运行入口说明，不把历史实验记录视为本次复现结果。
 
-*2026-10-08 补充学习资料规范入口、适用范围与图文要求；同步通用代码规范及接手模板。*
+The two repositories were consolidated into their own subdirectories with their original Git histories preserved. CoMind is the main entry point for future maintenance. This consolidation does not represent a new reproduction of the recorded experiments.
 
-*2026-10-11 将代码规范拆为通用、语言与项目专项；原文件名保留兼容入口，未纳入桌面 JavaScript 临时规范。*
+## 使用与维护约定 / Ground rules
+
+1. **个人笔记按授权读取**：`00_个人笔记/` 不作为 AI 默认参考材料。
+2. **遵守过滤标记**：分享本库、批量提供给 AI 或生成公开材料时，跳过带【请过滤本文件】标记的文件；AI 不代删标记。
+3. **保护个人信息与凭据**：提交和公开内容中过滤真实姓名、学校、单位、地理位置等身份信息；敏感内容按所有者已有明确授权处理。密钥、账号凭据、环境和缓存不入库。
+4. **Git 按会话授权执行**：通常由 AI 整理与提交、所有者推送；已明确授权 AI 代推时，在授权范围内执行。
+5. **保留资料的适用边界**：个人化材料不直接当作通用模板；恢复清单以实际机器为准，学习示例不等于生产实现。
+6. **结构变化同步导航**：增删或移动目录时，同步主 README、子目录说明和受影响链接。
+
+AI 建议读取顺序：协作背景 → 代码规范短路由 → 当前任务对应的正文与项目资料。学习资料仍采用独立示例，不自动引入共享工程层或统一训练入口。

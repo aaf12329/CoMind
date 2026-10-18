@@ -1,20 +1,40 @@
 # 机器学习基础：从线性回归到 Transformer，双框架对照版（PyTorch × TensorFlow）
 
+> 本目录已归并到 [共知 · CoMind](../README.md)，后续在这里维护；原仓库的提交历史一并保留。
+
 > 每个模型**两份代码**：PyTorch 版 + TensorFlow 版。同数据、同随机种子、同超参、同起点——
 > 数字对得上（收敛值一字不差），图能并排看（同名图放各自的 figs 目录）。
 > 两份代码的差别，恰好就是"两个框架的差别"。
 >
 > 配套阅读：论文《Attention Is All You Need》(arXiv:1706.03762)
-> 环境：conda 环境 `yolo`（已装 torch 2.11 + tensorflow 2.21；这些小题都跑 CPU）。
+> 原环境记录：conda 环境 `yolo`（torch 2.11 + tensorflow 2.21；这些小题都跑 CPU）。克隆后请按下方入口自行选择 Python，在本目录创建 `.venv`。
 > 每个模型一个文件夹；**进每个文件夹先读它的 README.md**：是什么、两份代码怎么对照、
 > 图怎么读、自测题都在里面。
 
 ## 运行方式
 
-```bash
-C:\Users\Guards\.conda\envs\yolo\python.exe 01_linear_regression\01_linear_regression_pytorch.py
-C:\Users\Guards\.conda\envs\yolo\python.exe 01_linear_regression\01_linear_regression_tensorflow.py
+先在 `Basic_Machine_Learning/` 打开 PowerShell，运行 [Create-Venv.ps1](Create-Venv.ps1)。默认使用 PATH 中的 `python`，也可以通过 `-Python` 指定自己安装的 Python 可执行文件：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File ./Create-Venv.ps1
+# 自行指定 Python 时，将下面的占位路径换成本机 python.exe：
+# powershell -NoProfile -ExecutionPolicy Bypass -File ./Create-Venv.ps1 -Python '<本机 Python 可执行文件路径>'
 ```
+
+环境固定创建在 **`Basic_Machine_Learning/.venv/`**，由 Python 自带的 `venv` 创建。脚本可从其他工作目录调用，创建位置始终位于本脚本旁；已有有效环境会校验并复用，不会覆盖其中的 Python 或软件包。更换基础 Python 时，先自行备份或移走旧 `.venv`，再重新创建。
+
+脚本只创建环境，不自动下载 Python 或安装依赖。自行选择适合本机的 Python 和依赖版本；示例使用 NumPy、Matplotlib，以及相应的 PyTorch 或 TensorFlow。使用新环境的解释器安装所需依赖后运行：
+
+```powershell
+# 公共绘图库；框架按自己要运行的示例和机器条件另行安装。
+./.venv/Scripts/python.exe -m pip install numpy matplotlib
+./.venv/Scripts/python.exe 01_linear_regression/01_linear_regression_pytorch.py
+./.venv/Scripts/python.exe 01_linear_regression/01_linear_regression_tensorflow.py
+```
+
+无需激活环境，也无需修改学习代码中的路径。各章节原有的环境命令保留为历史示例；运行时使用本目录 `.venv` 的解释器与对应脚本即可。`.venv/` 已被 Git 忽略。
+
+目录入口：`Create-Venv.ps1` → 使用者指定的 Python → 本目录 `.venv/` → 各章节的独立脚本。各章节仍各自保留 README、两份框架代码与 `figs_pytorch/`、`figs_tensorflow/`。
 
 每次运行会完整重训一遍模型，并**重新生成对应 `figs_pytorch/` 或 `figs_tensorflow/`
 下的全部参考图**——图不是贴上去的素材，全部由代码从真实训练中画出来，与代码永远同步。
