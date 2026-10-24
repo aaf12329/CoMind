@@ -1,0 +1,251 @@
+# 附件｜怎么学：我的英语应试学习路径
+
+[返回主文](Temp.md) · [查看这份路径的 seed 原文](../seed/Temp_附件_怎么学.md) · [返回阅读索引](../README.md)
+
+我学的是理工方向。对我而言，英语首先是一项学校明确要求完成的任务；如果没有这项要求，我并不会主动把它排进学习计划。这里记录的就是在这个现实前提下，我应付英语的方法：把有限的精力放到需要掌握的词汇、阅读、题型和听力上，再通过后续复习减少遗忘。
+
+这是一条个人路径。下面的例句、自编练习和复习日程，是对这条路径的具体展开，可以按实际课程与考试调整。
+
+```text
+单词：音、形、义与词性
+        ↓
+词形变化：认出同一词的变化，区分同词族的不同用法
+        ↓
+短语与逻辑线索：积累搭配，反复练习七选五的衔接判断
+        ↓
+句子阅读：把单词放回具体句子
+        ↓
+句子听力：遮住文字，检查声音能否唤起词义
+        ↓
+之后多天：旧词混入新内容，换句子、换提示，重新辨析
+```
+
+## 1. 单词先有一个能用的入口
+
+我会优先从学校要求的词表、教材和练习里取词。一次选少量，先把这一组走完，不用为了扩大数量而只留下眼熟的拼写。
+
+一个词至少记录这些内容：
+
+| 内容 | 以 improve 为例 |
+| --- | --- |
+| 拼写 | improve |
+| 声音 | 听词典录音，跟读，再遮住文字听一次。 |
+| 词性与当前常用义 | 动词；改善、提高。先掌握当前材料中的含义。 |
+| 一个搭配 | improve my listening：提高我的听力。 |
+| 一个句子 | Daily practice can improve my listening. |
+
+第一遍见到一个词时，可以先看释义建立联系；随后遮住答案，试着说出它在这里的意思，再核对。写作或拼写有要求时，也从意思反过来回忆英文。
+
+**看见拼写能认、听见声音能认、需要时能想起来，是不同的检查项目。** 哪一项不会，就在记录里标清，而不是统一写成“背过”。
+
+## 2. 单词变化要找规律，也要记清规律的边界
+
+这里先分成两类：一类是同一个词为了表达语法关系而变化；另一类是构成相关的新词，词性或含义也可能改变。理解这一区别，才能避免把所有长得像的词都按同一种用法处理。
+
+### 2.1 常见语法变化
+
+| 情况 | 常见变化与例子 | 学习时要留意什么 |
+| --- | --- | --- |
+| 名词复数 | book → books；box → boxes | 不能把所有复数都简化成加 s；还会遇到不规则形式。 |
+| 辅音字母 + y 的复数 | city → cities | toy → toys，元音字母 + y 的情况不同。 |
+| 动词第三人称单数 | work → works；watch → watches；study → studies | 结合主语及句子结构判断，不能只看词尾。 |
+| 规则过去式、过去分词 | work → worked；like → liked | 原词末尾已有 e 时通常加 d。 |
+| 辅音字母 + y 的规则过去式 | study → studied；try → tried | play → played；不要把所有 y 都变成 i。 |
+| 常见 -ing 变化 | work → working；make → making；study → studying | 常见不发音的词尾 e 会去掉；see → seeing 等另记。 |
+| 常见双写 | stop → stopped / stopping；plan → planned / planning | 留意末尾重读音节，以及拼写中的元音字母 + 单个辅音字母条件；w、x、y 通常不双写，例外查词。 |
+| 不规则变化 | go → went → gone；write → wrote → written | 按词记录原形、过去式、过去分词，不能套规则词的 ed。 |
+
+这张表用于建立辨认框架，不能穷尽例外。具体词形可以查 [Cambridge：动词基本形式](https://dictionary.cambridge.org/grammar/british-grammar/basic) 与 [拼写规则](https://dictionary.cambridge.org/us/grammar/british-grammar/e)。
+
+双写可以对照着记：`stop → stopping`，但 `open → opening` 的末尾音节不重读，`fix → fixing` 的末尾是 x。先记常见模式及其反例，不把一个例子扩成所有单词的公式。
+
+例如，我看到 `studying`，要能还原到 `study`；看到 `studied`，除了认出词，还要继续看它在句中承担什么语法作用。把后缀去掉，只完成了辨词的一部分。
+
+### 2.2 前缀、后缀与词族
+
+| 线索 | 自己建立的一组联系 | 能提供什么帮助 |
+| --- | --- | --- |
+| re- | read → reread | 提示“再次”，再由上下文确认含义。 |
+| 否定前缀 | happy → unhappy；possible → impossible | 提示含义改变，但具体用哪个前缀要查词，不能任意替换。 |
+| -ment、-ness | improve → improvement；happy → happiness | 常见名词构成线索；留意 happy 的拼写变化。 |
+| -tion / -sion | educate → education；decide → decision | 帮助联系动词与名词，但并非都能直接在原词后拼接。 |
+| -ful / -less | care → careful / careless | 比较“有某种特征”与“缺少某种特征”的含义。 |
+| -ly | careful → carefully | 常见副词线索；friendly 却常用作形容词，不能只凭 ly 定词性。 |
+
+看到新词时，我先用这些线索提出一个猜测，再用词典和句子核对；不为了凑齐词族，把没有见过的形式自行拼出来。前后缀可以帮助辨认词义与词性，但搭配和具体含义仍需学习。[Cambridge：构词方式](https://dictionary.cambridge.org/us/grammar/british-grammar/word-formation_2)
+
+回到七选五，这一步也有作用：`improve` 与 `improvement` 可能围绕同一件事展开，帮助我发现话题延续。但同词族只是线索，最后仍要检查它们在前后句中的关系。
+
+## 3. 短语一起记，七选五反复找衔接
+
+单词有了基本印象后，我会把常见搭配一起记。例如：
+
+- `improve my listening`：提高我的听力。
+- `an improvement in my listening`：我的听力方面的改善。
+- `pay attention to ...`：注意……。
+- `as a result`：因此、结果是。
+- `for example`：例如。
+- `even so`：即便如此。
+
+其中有些帮助我理解具体内容，有些帮助我辨认作者在怎样组织内容。做七选五时，后者尤其值得反复检查。
+
+### 3.1 每一空都问同一组问题
+
+1. **空前在说什么？** 是提出问题、交代背景，还是给出一种做法？
+2. **空后接着说什么？** 它是在举例、解释、转折，还是承接某个对象？
+3. **中间需要什么作用？** 先用中文说清需要补一个原因、结果、例子或过渡。
+4. **选项能否同时接住两边？** 找到空前的一条依据，再找到空后的一条依据。
+
+英国文化教育协会关于缺句阅读的指导强调空前空后、指代词与话语标记的联系。这里把这类衔接检查用于七选五练习，不把它当作所有题目的固定答案公式。[British Council：缺句阅读](https://learnenglishteens.britishcouncil.org/exams/reading-exams/missing-sentences)
+
+### 3.2 我具体找哪些线索
+
+| 线索 | 可以怎样检查 |
+| --- | --- |
+| 指代 | `it / they / this / these / such` 指什么？数量、对象和意思是否对得上？ |
+| 语义延续 | 同一个词、同义表达、同词族，是否仍在谈同一对象或问题？ |
+| 转折、让步 | `however / instead / even so` 前后究竟在哪里发生了变化？ |
+| 因果 | 原因能否推出这里的结果？不要只因为看到 `therefore` 就填。 |
+| 举例、解释 | `for example / in other words` 后面的内容，在说明前面的哪一点？ |
+| 顺序 | `first / then / later / before / after` 是否符合事件或操作的先后？ |
+| 段落作用 | 这句话是在开头立题、段中展开，还是结尾收束？ |
+
+**关键词帮助我缩小候选，衔接证据帮助我作决定。** 一个选项即使出现相同单词，也可能接不上指代或逻辑；另一个选项换了表达，却可能把两边接得更完整。
+
+做完后，我会把每空的依据写成一句话，例如：“前面的 words 对应这里的 them，后面的 however 又要求一个与结果相反的预期。”答对却说不出关系的空，也值得复看。
+
+## 4. 放到句子里读，检查词性和含义
+
+以同一词族做一组小对照：
+
+| 句子 | 我要辨认的地方 |
+| --- | --- |
+| Daily practice can **improve** my listening. | can 后的动词原形；这里表示“提高”。 |
+| I noticed an **improvement** in my listening. | an 后的名词；这里表示“改善”。 |
+| These exercises **improved** my listening. | 动词的过去式，描述已经发生的变化。 |
+| My listening is **improving**. | is 与 improving 构成进行形式，表示正在改善。 |
+
+读的时候，我先抓句子主干，再看目标词处在什么位置。需要时查词和分析句子；理解之后遮住译文，用自己的话解释，或者补回被遮住的词。
+
+这时再回到七选五：识别出 `an improvement` 是名词短语，只能帮助我读懂句子；还要确定这次“改善”指的是前文哪件事，后文是否继续解释它。词形辨认和上下文判断要接起来。
+
+## 5. 再放进听力句子，给声音也留一个入口
+
+我会先用读过、已经理解的短句，完成从文字到声音的一次转换。
+
+1. **遮住文字，听句子。** 尝试抓住意思和关键词；没听懂时先再听一遍。
+2. **留下自己的判断。** 写关键词、简述意思或做一个小填空，避免只是感觉“好像懂了”。
+3. **看原文定位。** 区分是不认识这个词，还是读得懂却没听出来；也留意具体词形。
+4. **带着问题再听。** 将声音、拼写和当前句义对应起来，必要时跟读。
+5. **再次遮住文字。** 检查自己能否重新听出，而不是一直盯着原文完成任务。
+
+同一句用来起步，之后换成包含这些词的新句子。只熟悉一份稿子，可能还不足以判断我能否在别处听懂。材料长度和速度要让我有机会理解、核对与纠正，不用一开始就把整篇都做成听写。
+
+这一“先读后听”的顺序是我的学习安排，不能单凭前面的阅读表现推定听力已经掌握。
+
+## 6. 此后多天，旧词混进新内容中再辨析
+
+当天能认出来，只是一个检查点。我会让旧词在之后的多天里重新出现，并混进当天的新学习内容。
+
+### 6.1 一个可以调整的排程
+
+| 时间 | 怎样让这一组词回来 |
+| --- | --- |
+| 当天 | 完成音形义、常见变体、搭配、阅读句子与一轮句子听力。 |
+| 第 1 天 | 混入新词前，先遮住答案回忆几个旧词，再核对。 |
+| 第 3 天 | 换句子，比较旧词的不同词形，以及它与新词容易混淆的地方。 |
+| 第 7 天 | 混合阅读和听力小测；七选五继续解释指代与逻辑，不背答案位置。 |
+| 第 14 天 | 再用新句子检查；没掌握的词回到更近的复习安排。 |
+
+这些天数只是起步示例，不是统一的最优间隔。想起来很吃力或反复出错，就缩短间隔并重新学习；稳定回忆后，再考虑拉开。
+
+Pavlik 与 Anderson 的词汇配对实验研究了练习、间隔与保留的关系，支持认真安排分散复习；它没有为这里这套具体日程作出保证。[词汇记忆中的间隔研究](https://pubmed.ncbi.nlm.nih.gov/21702785/)
+
+### 6.2 混合时，要真的作出判断
+
+我不会仅仅把旧词排到新词旁边，顺着看一遍。可以穿插这样的任务：
+
+- 看见句子中的 `improvement`，说清它为什么不是 `improve`。
+- 在 `She checked the answer carefully.` 中，说明这里为什么用副词，而不是形容词 `careful`。
+- 听一个含旧词的新句子，在不看文本时抓住意思，再查原文。
+- 将旧七选五的正确句子放进一个新段落，重新判断它是否还成立。
+
+初学时先建立每个词的基本联系，再把容易混淆的项目放在一起比较。无目的地堆很多陌生词，只会让我难以判断究竟卡在哪里。
+
+2024 年一项外语词义学习研究，在反复提取时变换句子线索，观察到了记忆收益。这支持我尝试换语境回忆，但不能证明“任何材料随便混合”都有好处，也没有直接验证本附件的读、听、题型整条路线。[变换提取线索的研究](https://doi.org/10.1073/pnas.2413511121)
+
+我的判断标准是：隔了一段时间、换了材料之后，还能不能认出、听出并区分。
+
+## 7. 自编七选五：把“找规律”完整走一遍
+
+> 以下为本附件自编的教学练习，用于演示衔接判断；叙述中的学习效果属于练习情节，不是实验数据。五空选七句，两个选项不用。
+
+### 题目
+
+When I started revising English, I made a list of twenty new words every evening. **(1)** The next morning, however, I could recognise only a few of them.
+
+I decided to change my routine. Instead of learning isolated translations, I put each word into a short sentence. **(2)** For example, I used improve in the sentence “Short daily practice can improve my listening.”
+
+I then listened to recordings of those sentences with the text covered. **(3)** Only after that did I check the transcript to find what I had missed.
+
+A week later, I reviewed the old words alongside new ones. **(4)** When I mixed up two forms, I compared their roles in new sentences.
+
+The first few reviews were slower than rereading my notes. **(5)** I kept the routine because remembering the words a week later mattered more to me than feeling fluent that evening.
+
+### 选项
+
+- **A.** The review included pairs such as improve and improvement.
+- **B.** For this reason, I stopped listening to English altogether.
+- **C.** By bedtime, I felt sure that I had learned them all.
+- **D.** These two teachers gave completely different explanations.
+- **E.** Even so, I found the later tests easier to complete.
+- **F.** Before checking anything, I wrote down the key words I could hear.
+- **G.** This gave each word a context in which it made sense.
+
+### 答案与依据
+
+先自己填，再看这一部分。每一空都同时检查两边。
+
+| 空 | 答案 | 空前怎样接住 | 空后怎样接出 |
+| --- | --- | --- | --- |
+| 1 | C | them 指前面的 twenty new words；by bedtime 接住 every evening 的时间。 | “以为全学会”与次晨只能认出少量词形成 however 的转折。 |
+| 2 | G | This 接住“把每个词放进短句”的做法；context 说明它的作用。 | For example 接着给出具体例句。 |
+| 3 | F | 听了遮住文本的录音后，先写自己听出的关键词。 | Only after that 承接这个步骤，随后才检查文本。 |
+| 4 | A | The review 指前面的复习；词形配对补充复习内容。 | two forms 接住 improve / improvement，引出词性与用法比较。 |
+| 5 | E | Even so 对前面“复习更慢”作让步转折。 | 后面说明保留这套做法的理由，later tests 也呼应延后的检查。 |
+
+B 虽然有“听英语”这个话题，却声称完全停止听力，与后面的听力练习及保留流程冲突。D 的 two teachers 找不到对应的人物，也打断了个人复习的叙述。
+
+**再强调一次：规律是前后关系，不是某个词一出现就选某个答案。** 换一道题，however 的两边可能谈任何话题；要继续找实际的转折内容。像 this 这样的词，也可能概括前面的一个做法，而不只是替代最近的名词。
+
+## 8. 最后收成一张自己的学习记录
+
+```text
+今天这一组词：
+主要来自哪份教材 / 练习：
+
+1. 音形义：哪些能认，哪些听不出？
+2. 词形：遇到了哪些常见变化，哪些必须单独记？
+3. 搭配：每个词留一个当前用得上的短语。
+4. 阅读：换成句子后，词性和含义能否说清？
+5. 听力：遮住文本后能否抓住意思，错在哪里？
+6. 七选五：每空的前后依据是什么，错误属于哪一种？
+7. 后续复习：下次放在哪天，混入哪些新内容？
+```
+
+时间少时，缩小这一组的规模，先完成能检查的部分。七选五可以单独安排一小篇，重点复盘自己为什么选，而不只是累计篇数。读得懂、听得出、隔天能辨清，各自留下结果；缺了哪一段，就回到那一段处理。
+
+对我来说，这条路线首先服务于学校的要求。把单词连成词族和搭配，再连到句子、听力与多天后的辨析，是为了让投入的练习能够留下一些可以再次取用的东西。
+
+---
+
+## 依据与适用范围
+
+词形表、教学例句、七选五全文和复习日程由本附件编排；没有把它们当作经过验证的个人成绩记录。资料用于核对局部规则和方法，不能保证任何人的具体提分幅度。
+
+- [Cambridge：动词基本形式](https://dictionary.cambridge.org/grammar/british-grammar/basic)、[拼写规则](https://dictionary.cambridge.org/us/grammar/british-grammar/e)、[构词方式](https://dictionary.cambridge.org/us/grammar/british-grammar/word-formation_2)：核对常见规则及例外边界。
+- [British Council：缺句阅读](https://learnenglishteens.britishcouncil.org/exams/reading-exams/missing-sentences)：核对前后文、指代及话语标记的衔接检查思路。
+- [Pavlik 与 Anderson（2005）：词汇记忆中的练习与间隔](https://pubmed.ncbi.nlm.nih.gov/21702785/)：本次核对公开摘要；研究任务为词汇配对记忆。
+- [Butowska-Buczyńska 等（2024）：变换提取线索与学习](https://doi.org/10.1073/pnas.2413511121)：核对公开摘要及相关结果说明；句子线索变化的收益不等于任意混学都有效。
+
+*根据本人补充的学习方法整理；语法说明、例句与排程为后续展开。资料核对与成文日期：2026-10-24。*
