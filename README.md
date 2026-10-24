@@ -14,18 +14,20 @@
 
 ## 从这里开始 / Start here
 
-CoMind 保存三类东西：**个人笔记与学习实践**、**供 AI 使用的协作规范**、**恢复与部署清单**。
+CoMind 保存四类东西：**个人笔记与学习实践**、**供 AI 使用的协作规范**、**思考与写作**、**恢复与部署清单**。
 原 `Basic_Machine_Learning` 与 `Quick_deployment` 已归并到本仓库，分别保留原提交历史。
 
 | 区域 | 内容 | 阅读方式 |
 |---|---|---|
 | [00_个人笔记](00_个人笔记/) | 私人笔记；其中 [Basic_Machine_Learning](00_个人笔记/Basic_Machine_Learning/README.md) 是双框架学习资料 | 笔记部分所有者自用、AI 不主动读取；**学习资料部分可按需读取** |
 | [01_AI项目协作参考](01_AI项目协作参考/README.md) | AI 协作规范的**唯一出处**：子代理与效率、编程规范、提交与 git 权限 | 从该目录的 `README.md` 索引进，按"开工前 → 写代码 → 提交"三步取用 |
+| [02_思考与写作](02_思考与写作/README.md) | 关于学习、智能与直觉的思考笔记、文章及 TXT 版本 | 从阅读索引选文章；需要追溯时，再查看对应笔记 |
 | [Quick_deployment](Quick_deployment/README.md) | 重装恢复、新机迁移、网站入口、VS Code 与 AI 工具插件清单 | 按恢复顺序查阅对应清单 |
 
 ### 我现在要做什么？
 
 - **学习机器学习**：先读 [学习路线与运行方式](00_个人笔记/Basic_Machine_Learning/README.md)。覆盖线性回归、MLP、LSTM、迷你 Transformer、音频架构与树模型。
+- **阅读文章或继续整理想法**：从 [思考与写作](02_思考与写作/README.md) 按主题进入，区分思考笔记、文章与 TXT 版本。
 - **重装系统或换电脑**：先读 [恢复流程](Quick_deployment/README.md)，再查 [相关网站](Quick_deployment/相关网站.md)、[VS Code 插件](Quick_deployment/VSCode插件清单.md) 和 [AI 插件](Quick_deployment/AI插件.md)。
 - **让 AI 接手工作**：AI 先读根目录 [`AGENTS.md`](AGENTS.md)，再进 [`01_AI项目协作参考/README.md`](01_AI项目协作参考/README.md)。
 
@@ -46,7 +48,7 @@ CoMind 保存三类东西：**个人笔记与学习实践**、**供 AI 使用的
 | 配置 conda | [conda 路径注意事项](01_AI项目协作参考/01_编程规范/语言规范/Python/conda路径注意事项.md) | 仅使用 conda 时读取；环境以机器上实际状态为准 |
 | 调研 GitHub / 找论文 | [04_资料检索/](01_AI项目协作参考/04_资料检索/) | GitHub 限流与降级、学术来源核实与合法全文获取 |
 
-思考类笔记与个人环境配置总表仍以所有者指定的位置为准，不因归并自动收入或读取。
+本次迁入的思考类笔记与文章见 [02_思考与写作](02_思考与写作/README.md)；其他个人资料与环境配置总表仍以所有者指定的位置为准，不因归并自动收入或读取。
 
 ## 目录结构 / Layout
 
@@ -75,6 +77,11 @@ CoMind/
 │   ├── 03_项目接手手册_模板与写法.md
 │   ├── 04_资料检索/
 │   └── 用户个人信息参考/                 分享时遵守文件过滤标记
+├── 02_思考与写作/                        思考笔记、文章与 TXT 版本
+│   ├── README.md                         按主题阅读与版本索引
+│   ├── 给变化以时间——关于学习与神经连接的猜想.md
+│   ├── 奇思妙想.md、奇思妙想_文章版.md / .txt
+│   └── 直觉.md、直觉_文章版.md / .txt
 └── Quick_deployment/
     ├── README.md
     ├── 相关网站.md
@@ -112,6 +119,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ./Create-Venv.ps1
 保留原项目的目录结构、学习代码、配套图文和提交历史。后续统一在本库对应目录维护；原仓库链接用于追溯来源。本次归并只更新资料组织、导航及运行入口说明，不把历史实验记录视为本次复现结果。
 
 The two repositories were consolidated into their own subdirectories with their original Git histories preserved. CoMind is the main entry point for future maintenance. This consolidation does not represent a new reproduction of the recorded experiments.
+
+2026-10-24：将桌面“写文章的灵感”中的 7 个文件迁入 `02_思考与写作/`，保留原文件名与内容，新增主题阅读索引。
 
 ## 使用与维护约定 / Ground rules
 
