@@ -1,0 +1,87 @@
+/* 主题：页面布局与共享视觉样式。无函数调用；CSS 类由 JSX 元素引用。
+ * 输入：DOM 与 className；输出：浏览器布局和样式。运行：npm run dev。
+ */
+:root {
+  font-family: 'Segoe UI', 'Microsoft YaHei', system-ui, sans-serif;
+  color: #26362f;
+  background: #f4f5ef;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --ink: #26362f;
+  --muted: #738078;
+  --green: #276653;
+  --line: #e1e5db;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, select { font: inherit; }
+button { cursor: pointer; }
+button, select { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, select:focus-visible { outline: 3px solid #79b4a0; outline-offset: 4px; }
+code { font-family: 'Cascadia Code', Consolas, monospace; }
+.app-shell { width: min(1120px, calc(100% - 64px)); margin: 0 auto; }
+.topbar { height: 86px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 17px; }
+.brand-mark { width: 34px; height: 34px; display: grid; place-items: center; background: var(--green); color: white; border-radius: 10px; font-size: 21px; }
+.lesson-badge { font-size: 11px; color: var(--muted); letter-spacing: 1.4px; }
+.intro { padding: 46px 0 32px; }
+.eyebrow { color: var(--green); font-size: 12px; letter-spacing: 1px; display: flex; align-items: center; gap: 7px; }
+.status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+h1 { margin: 17px 0 17px; font-size: clamp(32px, 4vw, 50px); line-height: 1.26; font-weight: 650; letter-spacing: -1.5px; }
+.intro > p { margin: 0; font-size: 14px; color: var(--muted); line-height: 1.8; }
+.workspace { display: grid; grid-template-columns: 1.04fr 1fr; gap: 24px; align-items: stretch; }
+.section-heading { display: flex; align-items: center; gap: 10px; }
+.section-heading h2 { margin: 0; font-size: 15px; font-weight: 650; }
+.section-index { font: 11px 'Cascadia Code', Consolas, monospace; color: var(--muted); }
+.state-card { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 28px; }
+.state-snapshot { margin: 24px 0; background: #f6f7f3; border: 1px solid #edf0e7; border-radius: 13px; padding: 18px; }
+.snapshot-label { font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+.state-values { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 16px; }
+.state-values > div { padding-left: 18px; border-left: 1px solid var(--line); }
+.state-values > div:first-child { padding-left: 0; border-left: 0; }
+.state-values code { display: block; font-size: 11px; color: var(--muted); }
+.state-values strong { display: block; margin-top: 7px; font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.flow-list { list-style: none; padding: 0; margin: 0; }
+.flow-list li { position: relative; display: flex; gap: 12px; padding-bottom: 17px; }
+.flow-list li:not(:last-child)::after { content: ''; position: absolute; top: 25px; bottom: 0; left: 12px; width: 1px; background: #dfe8df; }
+.flow-number { flex-shrink: 0; width: 25px; height: 25px; display: grid; place-items: center; border-radius: 50%; background: #eaf2eb; color: var(--green); font: 11px Consolas, monospace; }
+.flow-list strong { font-size: 13px; line-height: 25px; font-weight: 600; }
+.flow-list p { margin: 3px 0 0; font-size: 11px; color: var(--muted); line-height: 1.6; }
+.code-caption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+.code-caption code { color: var(--green); font-size: 12px; }
+.code-caption span { font-size: 11px; color: var(--muted); }
+.details-grid { display: grid; grid-template-columns: 1.04fr 1fr; gap: 24px; margin-top: 24px; }
+.history-card, .lesson-card { padding: 25px 28px; background: #fff; border: 1px solid var(--line); border-radius: 18px; min-height: 235px; }
+.small-label { margin-left: auto; color: var(--muted); font-size: 10px; }
+.empty-history { color: var(--muted); font-size: 12px; margin: 30px 0; line-height: 1.9; }
+.history-list { list-style: none; padding: 0; margin: 15px 0 0; }
+.history-entry { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f0f2eb; }
+.history-entry:last-child { border-bottom: 0; }
+.history-order { font: 11px Consolas, monospace; color: #849487; }
+.history-entry > div { flex: 1; }
+.history-entry strong { display: block; font-size: 12px; font-weight: 500; }
+.history-entry > div > span { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
+.history-entry time { font: 10px Consolas, monospace; color: var(--muted); }
+.reading-list { padding: 0; margin: 18px 0 0; list-style: none; }
+.reading-list li { display: flex; gap: 12px; align-items: baseline; justify-content: space-between; margin-top: 12px; }
+.reading-list code { font-size: 11px; color: var(--green); }
+.reading-list span { font-size: 10px; color: var(--muted); }
+.muted-note { margin: 21px 0 0; font-size: 10px; color: var(--muted); line-height: 1.8; }
+footer { display: flex; justify-content: space-between; padding: 25px 0; margin-top: 16px; font-size: 10px; color: var(--muted); }
+@media (max-width: 800px) {
+  .app-shell { width: calc(100% - 32px); }
+  .workspace, .details-grid { grid-template-columns: 1fr; gap: 16px; }
+  .topbar { height: 72px; }
+  .lesson-badge { font-size: 9px; letter-spacing: 0; }
+  .intro { padding: 32px 0 26px; }
+  .details-grid { margin-top: 16px; }
+}
+@media (max-width: 460px) {
+  .brand { font-size: 14px; gap: 8px; }
+  .lesson-badge { display: none; }
+  .state-card, .history-card, .lesson-card { padding: 23px 20px; }
+  .reading-list li { flex-direction: column; gap: 4px; }
+  .code-caption { flex-wrap: wrap; }
+  footer { flex-direction: column; gap: 9px; }
+}

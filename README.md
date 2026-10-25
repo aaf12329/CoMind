@@ -19,7 +19,7 @@ CoMind 保存四类东西：**个人笔记与学习实践**、**供 AI 使用的
 
 | 区域 | 内容 | 阅读方式 |
 |---|---|---|
-| [00_个人笔记](00_个人笔记/) | 私人笔记；其中 [Basic_Machine_Learning](00_个人笔记/Basic_Machine_Learning/README.md) 是双框架学习资料 | 笔记部分所有者自用、AI 不主动读取；**学习资料部分可按需读取** |
+| [00_个人笔记](00_个人笔记/) | 私人笔记，含 [前端资料](00_个人笔记/前端开发/README.md) 与 [双框架机器学习资料](00_个人笔记/Basic_Machine_Learning/README.md) | AI 仅对机器学习子目录可按需读取；其他笔记按本人指定主题读取 |
 | [01_AI项目协作参考](01_AI项目协作参考/README.md) | AI 协作规范的**唯一出处**：子代理与效率、编程规范、提交与 git 权限 | 从该目录的 `README.md` 索引进，按"开工前 → 写代码 → 提交"三步取用 |
 | [02_思考与写作](02_思考与写作/README.md) | 关于学习、语言、AI 工具与个人思考的 seed 原文及润色文章 | 原文在 `seed/`，已成文的主题在 `articles/` 使用相同文件名对应 |
 | [Quick_deployment](Quick_deployment/README.md) | 重装恢复、新机迁移、网站入口、VS Code 与 AI 工具插件清单 | 按恢复顺序查阅对应清单 |
@@ -27,6 +27,7 @@ CoMind 保存四类东西：**个人笔记与学习实践**、**供 AI 使用的
 ### 我现在要做什么？
 
 - **学习机器学习**：先读 [学习路线与运行方式](00_个人笔记/Basic_Machine_Learning/README.md)。覆盖线性回归、MLP、LSTM、迷你 Transformer、音频架构与树模型。
+- **阅读前端笔记**：从 [前端学习资料](00_个人笔记/前端开发/README.md) 进入 JS 基础、运行工具、学习路线、CSS 与 React；配套计数器源码已归档。AI 按本人指定的主题读取。
 - **阅读文章或继续整理想法**：从 [思考与写作](02_思考与写作/README.md) 按主题进入，查看 `seed/` 原文及对应的 `articles/` 润色文章。
 - **重装系统或换电脑**：先读 [恢复流程](Quick_deployment/README.md)，再查 [相关网站](Quick_deployment/相关网站.md)、[VS Code 插件](Quick_deployment/VSCode插件清单.md) 和 [AI 插件](Quick_deployment/AI插件.md)。
 - **让 AI 接手工作**：AI 先读根目录 [`AGENTS.md`](AGENTS.md)，再进 [`01_AI项目协作参考/README.md`](01_AI项目协作参考/README.md)。
@@ -58,7 +59,12 @@ CoMind/
 ├── README.md                            本文件
 ├── 00_个人笔记/
 │   ├── conda常用指令.md
-│   ├── 前端整合笔记_TS_JS_路线图_CSS选择器.md
+│   ├── 前端开发/                         前端学习资料与独立计数器示例（按本人指定读取）
+│   │   ├── README.md                     阅读索引、比对整合与验证说明
+│   │   ├── JavaScript基础.md / 语言运行与工程工具.md
+│   │   ├── JavaScript科技树_学习清单.md / CSS选择器.md
+│   │   ├── React教程_调用关系与数据流.md
+│   │   └── 示例/react-counter-demo/       源码、配置、锁文件与历史截图
 │   └── Basic_Machine_Learning/           双框架学习资料（AI 可读）
 │       ├── README.md
 │       ├── Create-Venv.ps1               自选 Python，在本目录创建 .venv
@@ -122,6 +128,8 @@ The two repositories were consolidated into their own subdirectories with their 
 2026-10-24：将桌面“写文章的灵感”中的 7 个文件迁入 `02_思考与写作/`，保留原文件名与内容，新增主题阅读索引。
 
 同日继续整理为 `seed/` 与 `articles/` 两个目录：三组同名原文与文章，归并重复 TXT，从原始草稿及既有口述补齐 seed；旧版本通过 Git 历史追溯。
+
+2026-10-25：将桌面四份 JS / React 资料与旧前端整合笔记比对，合并为 [前端学习资料](00_个人笔记/前端开发/README.md)。运行工具、基础语法、学习路线、CSS 与 React 按主题维护；JavaScript 临时草案只在规范目录保存一份，明确采用后适用。
 
 ## 使用与维护约定 / Ground rules
 
