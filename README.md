@@ -28,7 +28,7 @@ CoMind 保存四类东西：**个人笔记与学习实践**、**供 AI 使用的
 
 - **学习机器学习**：先读 [学习路线与运行方式](00_个人笔记/Basic_Machine_Learning/README.md)。覆盖线性回归、MLP、LSTM、迷你 Transformer、音频架构与树模型。
 - **阅读前端笔记**：从 [前端学习资料](00_个人笔记/前端开发/README.md) 进入 JS 基础、运行工具、学习路线、CSS 与 React；配套计数器源码已归档。AI 按本人指定的主题读取。
-- **阅读文章或继续整理想法**：从 [思考与写作](02_思考与写作/README.md) 按主题进入，查看 `seed/` 原文及对应的 `articles/` 润色文章。
+- **阅读文章或继续整理想法**：浏览器可打开 [HTML 文章目录](02_思考与写作/index.html)；原文与成稿配对见 [思考与写作](02_思考与写作/README.md)。9 篇文章分别保留 Markdown 和按各自语气排版的 HTML。
 - **重装系统或换电脑**：先读 [恢复流程](Quick_deployment/README.md)，再查 [相关网站](Quick_deployment/相关网站.md)、[VS Code 插件](Quick_deployment/VSCode插件清单.md) 和 [AI 插件](Quick_deployment/AI插件.md)。
 - **让 AI 接手工作**：AI 先读根目录 [`AGENTS.md`](AGENTS.md)，再进 [`01_AI项目协作参考/README.md`](01_AI项目协作参考/README.md)。
 
@@ -85,6 +85,7 @@ CoMind/
 │   └── 用户个人信息参考/                 分享时遵守文件过滤标记
 ├── 02_思考与写作/                        原文与润色文章一一对应
 │   ├── README.md                         按主题阅读与配对索引
+│   ├── index.html                        浏览器文章目录（9 篇 HTML 阅读版）
 │   ├── seed/                             本人原文
 │   └── articles/                         润色文章，按同主题名配对（Markdown / HTML）
 └── Quick_deployment/

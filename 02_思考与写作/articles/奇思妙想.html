@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>智能的上限，为什么未必停在人类这里 · CoMind</title>
+<style>
+:root{--sans:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;--serif:"Noto Serif CJK SC","Source Han Serif SC","Songti SC",SimSun,serif;--mono:Consolas,"Cascadia Mono",monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--sans);font-size:18px;line-height:2;color:#30342f;background:#efeee8}
+.masthead{max-width:936px;margin:0 auto;padding:23px 24px;display:flex;justify-content:space-between;gap:16px;font-size:13px;letter-spacing:.05em;color:#61645b}.masthead a{color:inherit;text-decoration:none}
+.page{max-width:888px;margin:0 auto 64px;padding:0 48px 38px;background:#fffdf7;border-radius:3px}.hero{padding:48px 0 30px}.kicker{font-size:12px;font-weight:600;letter-spacing:.12em}.hero h1{margin:20px 0 0;font-size:clamp(32px,5vw,46px);line-height:1.5;overflow-wrap:anywhere;text-wrap:balance}
+.edition{display:flex;flex-wrap:wrap;gap:8px 22px;border-top:1px solid #cfd0c5;border-bottom:1px solid #cfd0c5;padding:13px 0;margin:0 0 28px;font-size:13px}.edition a{text-decoration:none}
+.article-content{overflow-wrap:anywhere}.article-content p{margin:0 0 1.35em}.article-content h2{margin:2.1em 0 1em;font-size:26px;line-height:1.6;scroll-margin-top:26px}.article-content h3{margin:1.8em 0 .85em;font-size:21px;line-height:1.6;scroll-margin-top:26px}.article-content h4{font-size:18px;margin:1.5em 0 .7em}
+a{color:#486347;text-underline-offset:4px;text-decoration-thickness:1px;overflow-wrap:anywhere}a:focus-visible,summary:focus-visible{outline:3px solid currentColor;outline-offset:4px}strong{font-weight:700}em{font-style:italic}
+.article-content blockquote{margin:22px 0;padding:16px 20px;border-left:3px solid #b8bcae;background:#f1f1e9;color:inherit;font-size:.9em}.article-content blockquote p:last-child{margin-bottom:0}
+.article-content ul,.article-content ol{padding-left:1.6em;margin:1em 0 1.6em}.article-content li{padding-left:.16em;margin:.5em 0}.article-content li>p{margin:.6em 0}
+pre{max-width:100%;overflow-x:auto;white-space:pre;background:#252c31;color:#e8ebea;padding:20px 22px;border-radius:5px;line-height:1.75;font-size:14px;tab-size:4;font-family:var(--mono)}code{font-family:var(--mono);font-size:.9em;background:#eaece5;padding:2px 5px;border-radius:3px;color:inherit}pre code{font-size:inherit;background:none;padding:0;border:0;color:inherit}
+.table-scroll{max-width:100%;overflow-x:auto;margin:24px 0 32px;border:1px solid #ced5d9;border-radius:4px}table{border-collapse:collapse;width:100%;min-width:460px;font-size:.88em;line-height:1.8}th,td{padding:12px 15px;border-bottom:1px solid #d8dee1;text-align:left}th{font-weight:700;background:#eeeee6}tr:last-child td{border-bottom:0}
+hr{border:0;border-top:1px solid #cfd0c5;margin:36px 0}.footnotes{font-size:.85em;line-height:1.9;border-top:1px solid #cfd0c5;margin-top:30px;padding-top:18px}.footnotes ol{margin-bottom:0}.footnote-ref{font-family:var(--sans);font-size:.72em;line-height:0;white-space:nowrap}.footnote-ref a{text-decoration:none;padding:0 2px}.footnote-back{font-family:var(--sans);text-decoration:none;margin-left:7px}li[id^="fn-"]{scroll-margin-top:20px}
+.toc{margin:0 0 30px;padding:12px 18px;border:1px solid #d3d6cc;background:#f6f5ee;font-size:14px;line-height:1.9}.toc summary{cursor:pointer;font-weight:600}.toc ol{padding-left:1.4em;margin:12px 0 4px}.toc li{margin:5px 0}.toc .sub{margin-left:20px}.toc a{text-decoration:none}
+.end-nav{display:flex;gap:24px;justify-content:space-between;border-top:1px solid #cfd0c5;margin-top:40px;padding-top:24px;font-size:13px;line-height:1.8}.end-nav a{max-width:46%;text-decoration:none}.end-nav a:last-child{text-align:right}footer{font-size:12px;color:#74796d;border-top:1px solid #cfd0c5;margin-top:25px;padding-top:17px;line-height:1.8}.article-content img{max-width:100%;height:auto}
+@media(max-width:640px){body{font-size:17px}.masthead{padding:16px 20px;font-size:12px}.masthead span{display:none}.page{margin:0 10px 24px;padding:0 21px 27px}.hero{padding-top:36px}.article-content{font-size:17px!important;line-height:2.05!important}.article-content h2{font-size:22px!important}.article-content h3{font-size:19px!important}pre{font-size:12px;padding:15px 16px}.edition{gap:6px 16px;font-size:12px}.table-scroll table{font-size:14px}.article-content blockquote{padding:13px 15px}.end-nav{gap:15px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{@page{size:A4;margin:17mm}body{background:white!important;color:black!important;font-size:11pt}.masthead,.edition,.toc,.end-nav{display:none}.page{max-width:none;margin:0;padding:0;border:0!important;box-shadow:none!important;background:white!important}.hero{background:white!important;color:black!important;margin:0!important;padding:0 0 18px!important;border-color:#555!important}.hero h1{color:black!important;font-size:25pt!important}.article-content{font-size:11pt!important;line-height:1.8!important}.article-content h2{color:black!important;background:none!important;break-after:avoid}.article-content p{orphans:3;widows:3}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f3f3!important;color:black!important;font-size:9pt;border:1px solid #ddd}.table-scroll{overflow:visible}table{min-width:0;font-size:9pt}tr{break-inside:avoid}a{color:inherit!important}footer{color:#555!important}}
+
+body{background:#e9edf5;color:#253148}.page{background:#f8faff;border:1px solid #cbd4e8}.hero{position:relative;border-bottom:1px solid #aebbd8;padding:55px 0 40px}.hero h1{font-weight:650;max-width:19em;font-size:clamp(31px,4.9vw,46px);letter-spacing:-.035em}.kicker{color:#526695;font-family:var(--mono)}.article-content{line-height:2.04}.article-content h2{border-top:1px solid #bcc8e1;padding-top:26px;color:#334d88}.article-content strong{color:#2a4487;background:#e6edff;padding:0 .12em}a{color:#3d57a1}.article-content blockquote{border-left:3px solid #5975b8;background:#edf2ff}.hero:before{content:"";display:block;width:80px;border-top:4px solid #465fa4;margin-bottom:24px}
+.article-content pre code{font-size:inherit;background:none;padding:0;color:inherit}</style>
+</head>
+<body class="hypothesis">
+<header class="masthead"><a href="../index.html">共知 CoMind · 思考与写作</a><span>个人文章 · HTML 阅读版</span></header>
+<div class="page">
+<header class="hero"><div class="kicker">思辨札记 · 智能与边界</div><h1>智能的上限，为什么未必停在人类这里</h1></header>
+<nav class="edition" aria-label="文档版本"><a href="奇思妙想.md">Markdown 正文</a><a href="../seed/奇思妙想.md">seed 原文</a><a href="../index.html">文章目录</a></nav>
+
+<main><article class="article-content" id="article-content"><p>讨论 AI 能不能超过人类时，我常常先想到一个更底层的问题：为什么人类大脑恰好应该是智能的上限？</p>
+<p>如果思考依赖某种物质结构，那么这种结构的速度、规模、连接方式和能量约束，就值得放进讨论里。人类是我们最熟悉的智能样本，却不能仅凭熟悉，就把自己的能力边界当成一切可能智能的边界。</p>
+<p>我倾向于相信，人工系统有机会在许多认知任务上走得比人类更远。支撑这个判断的，是一条需要逐层检查的思路：底层提供了什么能力，结构如何利用它，信息从哪里来，最后又被什么限制住。</p>
+<p>在最初的草稿里，我把神经信号的传导速度和电子系统的信号传播速度放在一起，直觉上觉得差距很大。这个比较确实把我的注意力引向了底材，但随后必须补上一道检查：传播速度、信息带宽、计算速度与智能表现，是几个不同的量。</p>
+<p>一辆车开得快，不代表道路每秒能运走更多货物；道路能运走更多货物，也不代表这些货物被送到了正确地点。信号多久到达、单位时间能传多少信息、一次任务要进行多少计算，需要分别理解。Cloudflare 的入门文章用网络解释了延迟、带宽和吞吐量的区别，这个区分同样能帮助我避免把所有性能都叫作“快”。<a href="https://www.cloudflare.com/en-gb/learning/performance/glossary/what-is-latency/">Cloudflare：理解延迟与带宽</a></p>
+<p>因此，把两种传播速度相除，得不到一个可靠的“智力倍数”。任务完成得好不好，还取决于系统如何表示问题、如何安排运算、如何利用反馈。底层优势可以提供空间，能不能把空间变成能力，是下一层的问题。</p>
+<p>这个区分没有让我放弃最初的判断，反而把判断变得更具体：人工系统能否通过更大的计算规模、更合适的连接和更有效的学习方式，完成生物系统难以承担的任务？如果能，这种优势在哪些条件下成立，又会在哪里遇到天花板？</p>
+<p>“人工神经元”这个词也容易制造一个过于直接的画面：既然晶体管很小，那么把更多晶体管堆进去，是不是就等于装进了更多脑细胞？</p>
+<p>实际需要把模型和硬件分开。人工神经网络里的节点，是数学模型中的计算单元；权重是参与计算的数值。IBM 的中文介绍从输入、权重、偏置和激活函数讲起，能帮助理解这种抽象。<a href="https://www.ibm.com/cn-zh/think/topics/neural-networks">IBM：什么是神经网络</a></p>
+<p>因此，一个模型节点并不对应一颗固定的晶体管。一批硬件可以反复计算不同的节点，模型规模也会受到存储与执行方式的限制。晶体管、参数、人工神经元和生物神经元各自处在不同层级，数量不能直接换算成能力。</p>
+<p>但更细致的比较仍然有意义。我可以分别问：硬件能提供多少运算，能保存多少数据，能多快地搬运这些数据；模型又需要多少运算、存储和交互，才能完成某类任务。这样，讨论就从“谁的零件更小”推进到了“谁能把资源组织成有效工作”。</p>
+<p>我原先还觉得，人类大脑首先要控制身体，然后处理感知，最后才有余力思考；AI 则可以把全部资源交给思考。这个直觉抓住了一个差异，却把脑功能排成了太简单的队伍。</p>
+<p>大脑要同时参与运动、感知、记忆、行为等多种活动。NINDS 的脑科学入门资料介绍了这些功能，却没有把它们排列成“控制完成以后才开始思考”的固定顺序。<a href="https://www.ninds.nih.gov/health-information/public-education/brain-basics">NINDS：Brain Basics</a></p>
+<p>对我来说，更值得保留的问题是：一个必须让身体持续生活的系统，与一个能够围绕指定任务安排资源的系统，可能有不同的设计条件。这个差异未必处处带来优势。身体带来了负担，也带来了经验；感知与行动提供的信息，本身可能参与理解。</p>
+<p>同样，AI 的每一次计算也未必都直接服务于有效推理。它可能花资源处理格式、生成措辞，或者重复一个错误。是否“用于思考”，需要回到任务结果，而不能仅凭它运行在一块为计算设计的芯片上判断。</p>
+<p>接下来，我最在意的是信息的来源。</p>
+<p>一个主要通过文本认识世界的系统，经常看到的是别人对世界的描述。事情发生，某个人观察并记录，记录被编辑、归纳，再成为系统能够使用的材料。每一环都可能改变重点：有些细节没有被记录，有些前提没有被写下，有些结论被反复引用，却逐渐失去了最初的条件。</p>
+<p>这是我说“信息距离”时真正想抓住的东西。读到“杯子很烫”，与自己碰到杯子之后立刻调整动作，得到的是不同类型的反馈。一个系统可以拥有大量关于烫的描述，但它是否能把描述用于一次陌生的操作，还需要另外检查。</p>
+<p>不过，信息转述也能增加价值。文字帮助人跨越时间和地点学习，抽象能把许多经历整理成可迁移的规律。更接近原始事件，并不自动意味着理解更好；原始信息同样需要选择和解释。关键是我们知道材料经过了什么处理，哪些内容还在，哪些条件已经看不见。</p>
+<p>这里还必须修正我草稿中的一句话：“压缩必然意味着损失。”无损压缩是实际存在的。把一长串重复内容换成能够完整还原的编码，可以减少存储量；有损压缩则会舍弃部分信息。Cloudflare 的图像压缩入门文章直观地介绍了两者。<a href="https://www.cloudflare.com/learning/performance/glossary/what-is-image-compression/">Cloudflare：有损与无损压缩</a></p>
+<p>我原先担心的，更接近“把一次经历概括成几句话”这样的选择性表达。把一段复杂经历写成“实验失败了”，文件可以保存得一字不差，但这句话没有留下失败发生在哪一步、当时有什么异常、哪些条件与前一次不同。缺失发生在摘要形成时，不一定发生在文件传输时。</p>
+<p>因此，讨论信息损失，需要说清楚保留的对象：是文件字节、图像细节，还是一个事件的语境。不能因为某种摘要舍弃了细节，就推出所有压缩和传递都会丢失内容。也不能因为文件能完整还原，就认为它完整记录了现实。</p>
+<p>AI 接触现实的方式也在变化。Google DeepMind 在 Gemini Robotics 的介绍中，展示了将视觉、语言与动作联系起来、用于控制机器人的方向。至少，这说明“AI 只能从互联网和书籍获得信息”不能作为普遍前提；人工系统同样可以接入观察与行动。<a href="https://deepmind.google/blog/gemini-robotics-brings-ai-into-the-physical-world/">Google DeepMind：AI 进入物理世界</a></p>
+<p>我关心的因而是：当系统获得更多直接反馈，它能不能发现描述与现实的偏差，再据此调整自己的行为？这个问题仍然不要求先回答它有没有人的主观体验，而是检查它能否利用新信息纠正判断。</p>
+<p>沿着底层继续往下看，就会碰到功率与散热。我在草稿里强调散热，是因为零件再小、运算再快，也需要能持续运行。短时间达到一个性能数字，与长时间承担任务，是两件事。</p>
+<p>但散热也不是唯一瓶颈。供电、散热、数据搬运和运算能力会彼此限制。Intel 的说明把处理器功率需求与散热方案联系起来，也提到温度或供电限制会影响运行。<a href="https://www.intel.com/content/www/us/en/support/articles/000055611/processors.html">Intel：处理器功率与散热设计</a></p>
+<p>NVIDIA 的性能入门文档则区分了计算、内存带宽与延迟等限制。它解释了为什么增加计算资源，并不必然让所有工作同比加速：有的操作在等待数据，有的操作无法充分利用并行资源。<a href="https://docs.nvidia.com/deeplearning/performance/dl-performance-gpu-background/index.html">NVIDIA：理解 GPU 性能瓶颈</a></p>
+<p>这让我更愿意把智能能力看成一条完整链路：资源允许系统进行多少工作，结构决定这些工作如何组织，信息决定它能依据什么判断，验证决定错误能否被发现。某一环增强之后，另一环可能接着成为限制。天花板未必消失，它可能换了位置。</p>
+<p>所以，我仍然倾向于认为，人类的能力边界未必会成为人工智能的最终边界。但我不再想用一个传播速度的比值，替整条论证作结。更值得追问的是：在具体任务中，人工系统有哪些可扩展的条件，它是否真的把这些条件变成了更可靠的能力，又为此付出了多少资源？</p>
+<p>我想保留的“奇思妙想”，就在这些问题里。先把人类放回一种具体的物质系统，把 AI 也放回具体的硬件、结构和信息来源，再逐层检查。这样，我们才可能看见，哪些限制来自当前做法，哪些限制来自更深的条件，以及哪些地方还有继续向前的空间。</p>
+<hr>
+<p><strong>资料怎么读</strong></p>
+<p>优先读 IBM 的神经网络中文科普、Cloudflare 的压缩图例和 Google DeepMind 的机器人介绍，分别帮助区分模型与硬件、理解信息保留方式、了解 AI 如何接触现实。延迟与带宽的文章、脑科学入门及两份硬件资料用于补充具体约束；NVIDIA 文档只需先看“Understanding Performance”一节。资料支持的是这些局部机制，本文关于智能未来上限的判断仍是一种推论。</p>
+<p>写作基础：《奇思妙想.md》的原始观点与推理方向。资料核对日期：2026-10-08。</p>
+<hr>
+<p><a href="../seed/奇思妙想.md">查看 seed 原文</a> · <a href="../index.html">返回目录</a></p>
+</article></main>
+<nav class="end-nav" aria-label="相邻文章"><a href="给变化以时间.html">← 上一篇<br>给变化以时间</a><a href="直觉.html">下一篇 →<br>直觉</a></nav>
+<footer>本文按同名 Markdown 排版 · HTML 生成于 2026-10-27 · 原文署名、版本与引用保留在正文中</footer>
+</div>
+</body>
+</html>
