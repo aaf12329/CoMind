@@ -21,7 +21,7 @@ CoMind 保存四类东西：**个人笔记与学习实践**、**供 AI 使用的
 |---|---|---|
 | [00_个人笔记](00_个人笔记/) | 私人笔记，含 [前端资料](00_个人笔记/前端开发/README.md) 与 [双框架机器学习资料](00_个人笔记/Basic_Machine_Learning/README.md) | AI 仅对机器学习子目录可按需读取；其他笔记按本人指定主题读取 |
 | [01_AI项目协作参考](01_AI项目协作参考/README.md) | AI 协作规范的**唯一出处**：子代理与效率、编程规范、提交与 git 权限 | 从该目录的 `README.md` 索引进，按"开工前 → 写代码 → 提交"三步取用 |
-| [02_思考与写作](02_思考与写作/README.md) | 关于学习、语言、AI 工具与个人思考的 seed 原文及润色文章 | 原文在 `seed/`，已成文的主题在 `articles/` 使用相同文件名对应 |
+| [02_思考与写作](02_思考与写作/README.md) | 关于学习、语言、AI 工具与个人思考的 seed 原文及润色文章 | 原文在 `seed/`，成稿在 `articles/` 按同主题名配对；保留已有 HTML 排版稿 |
 | [Quick_deployment](Quick_deployment/README.md) | 重装恢复、新机迁移、网站入口、VS Code 与 AI 工具插件清单 | 按恢复顺序查阅对应清单 |
 
 ### 我现在要做什么？
@@ -86,7 +86,7 @@ CoMind/
 ├── 02_思考与写作/                        原文与润色文章一一对应
 │   ├── README.md                         按主题阅读与配对索引
 │   ├── seed/                             本人原文
-│   └── articles/                         润色文章，与 seed 使用相同文件名
+│   └── articles/                         润色文章，按同主题名配对（Markdown / HTML）
 └── Quick_deployment/
     ├── README.md
     ├── 相关网站.md

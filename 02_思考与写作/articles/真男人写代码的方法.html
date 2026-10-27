@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>豪起来 · 真男人写代码的方法 · Python / JavaScript / Java</title>
+<style>
+  :root{
+    --ink:#22262e; --muted:#6f6a60; --paper:#f3efe6; --card:#fffdf8;
+    --accent:#c94f2b; --accent2:#2b6f8a; --line:#ddd5c6;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",sans-serif;
+    font-size:17px; line-height:1.95;
+  }
+  .page{max-width:840px;margin:0 auto;padding:72px 30px 110px}
+  .badge{
+    display:inline-block; font-size:13px; letter-spacing:.1em; color:var(--accent);
+    border:1px solid #e4b9a8; background:#fbeee7; border-radius:999px; padding:5px 14px;
+  }
+  h1{font-size:clamp(34px,5vw,48px); line-height:1.25; margin:18px 0 10px; letter-spacing:-.01em}
+  .meta{color:var(--muted); font-size:14px; margin:0 0 34px}
+  .lead{font-size:19px; color:#3b4250; border-left:5px solid var(--accent); padding-left:18px; margin:0 0 8px}
+  h2{
+    font-size:25px; margin:54px 0 14px; padding-left:14px;
+    border-left:5px solid var(--accent2); line-height:1.4;
+  }
+  h2 small{display:block;font-size:13px;color:var(--muted);letter-spacing:.08em;margin-top:4px}
+  p{margin:12px 0}
+  ul,ol{margin:10px 0; padding-left:1.3em}
+  li{margin:6px 0}
+  li::marker{color:var(--accent)}
+  code{
+    font-family:Consolas,"Cascadia Mono",monospace; font-size:.92em;
+    background:#e9e3d5; padding:2px 6px; border-radius:5px;
+  }
+  pre{
+    background:#20242c; color:#e9e6df; padding:18px 20px; border-radius:12px;
+    overflow:auto; line-height:1.75; font-size:15px;
+  }
+  pre code{background:none;padding:0;color:inherit}
+  blockquote{
+    margin:18px 0; padding:12px 18px; color:var(--muted); font-style:italic;
+    border-left:3px solid var(--line);
+  }
+  .note{
+    margin:18px 0; padding:14px 18px; border-radius:10px;
+    background:#fff6e7; border:1px solid #ecd8b7; border-left:5px solid #d9822b;
+    font-size:16px; color:#5b4a33;
+  }
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:18px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card b{display:block;color:var(--accent2);margin-bottom:4px}
+  .manifesto{
+    margin:56px 0 0; padding:30px 32px; border-radius:16px;
+    background:var(--card); border:1px solid var(--line);
+    border-left:8px solid var(--accent);
+  }
+  .manifesto p{margin:10px 0; font-size:21px; line-height:1.7; font-weight:600}
+  .manifesto p:first-child{font-size:26px; color:var(--accent)}
+  .manifesto p:last-child{font-weight:400; color:var(--muted); font-size:19px; margin-top:18px}
+  footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:#9a9284;font-size:13px}
+  @media print{
+    @page{size:A4;margin:16mm}
+    body{background:#fff}
+    .page{padding:0}
+  }
+
+  h3{font-size:20px;margin:32px 0 12px;color:var(--accent2)}
+  a{color:var(--accent2);overflow-wrap:anywhere;text-underline-offset:3px}
+  p,li{overflow-wrap:anywhere}
+  pre{white-space:pre;overflow-x:auto;max-width:100%;box-sizing:border-box}
+  pre code{font-size:inherit}
+  h1{overflow-wrap:anywhere}
+  @media(max-width:600px){.page{padding:32px 18px 60px}body{font-size:16px}pre{font-size:13px;padding:14px}}
+</style>
+</head>
+<body>
+<main class="page">
+<span class="badge">极客手册 · 真男人系列 · v2</span>
+<h1>豪起来：真男人写代码的方法</h1>
+<blockquote class="meta">v2 · Python＋JavaScript＋Java 扩展版 · 2026-10-27。原文与参考：本人；结构整理、技术补注与扩写：Codex。</blockquote>
+<p><a href="../seed/真男人写代码的方法.md">查看 seed 原文与参考</a> · <a href="真男人写代码的方法.md">查看 Markdown 正文</a> · <a href="../README.md">返回阅读索引</a></p>
+<p>首先，我们先抛弃那些花里胡哨的 IDE 或者集成开发环境。</p>
+<p>真男人就是应该豪起来。</p>
+<p>人生不过三万天，能豪一天是一天。</p>
+<p>so 我在此发出宣言：<strong>真男人就该用 notepad 或者 echo。</strong></p>
+<p>编辑器负责写字，解释器、运行时和编译器负责干活。下面就把这几个家伙直接叫出来。</p>
+<h2>01 先召唤小黑框</h2>
+<p><code>Win+R</code>，输入 <code>cmd</code>，回车。想再豪一点，先来一句：</p>
+<pre><code class="language-bat">color 0A</code></pre>
+<p>本文命令都按 <strong>Windows CMD</strong> 写。PowerShell 的激活脚本、调用方式和重定向规则有区别，先开对黑框。</p>
+<p>去代码所在目录，用 <code>cd /d</code>，跨盘也一起切过去：</p>
+<pre><code class="language-bat">cd /d &quot;D:\Code\MyDemo&quot;
+dir</code></pre>
+<p>把路径换成自己的。路径带空格就拿双引号夹住；复制程序路径带来的双引号也可以保留。真男人可以不用 IDE，总得知道自己站在哪个文件夹。</p>
+<h2>02 Python：先找到本体</h2>
+<pre><code class="language-bat">where python
+python -V</code></pre>
+<p>也可以直接找到 <code>python.exe</code>，在资源管理器里复制它的路径。假设本体放在这里：</p>
+<pre><code class="language-bat">&quot;C:\Python3_14\python.exe&quot; --version</code></pre>
+<p>如果 <code>where python</code> 先列出 <code>WindowsApps\python.exe</code>，再运行却把你送进应用商店，那可能碰到了应用执行别名。直接点名真正的解释器，少跟它绕。</p>
+<p>装过 Python 启动器的，还可以用 <code>py -0p</code> 查看它识别的版本，用 <code>py -3.10</code> 选择已安装的 3.10。没装启动器就走解释器绝对路径。</p>
+<h2>03 建一个自己的环境</h2>
+<p>进入项目目录，再开工：</p>
+<pre><code class="language-bat">&quot;C:\Python3_14\python.exe&quot; -m venv myvenv
+myvenv\Scripts\activate.bat
+python -m pip install 你要的包</code></pre>
+<p><code>myvenv</code> 建在当前目录。激活后，提示符通常会多出 <code>(myvenv)</code>；真要确认当前叫来的是谁：</p>
+<pre><code class="language-bat">python -c &quot;import sys; print(sys.executable)&quot;</code></pre>
+<p>输出应指向项目里的 <code>myvenv\Scripts\python.exe</code>。收工用 <code>deactivate</code>。</p>
+<p>激活这一步，主要是在当前终端里把环境的程序目录排到 PATH 前面。你也可以直接点名：</p>
+<pre><code class="language-bat">myvenv\Scripts\python.exe Hello.py</code></pre>
+<p>电脑里可能躺着三个 Python，装包就用 <code>python -m pip</code>，省得 pip 把东西装进别的叔叔裤兜里。<a href="https://docs.python.org/3.14/library/venv.html">Python：venv</a></p>
+<h2>04 写字与跑路的基础操作</h2>
+<pre><code class="language-bat">mkdir demo
+cd demo
+type nul &gt; Hello.py
+notepad Hello.py</code></pre>
+<p>保存这句进去：</p>
+<pre><code class="language-python"># 无外部输入；由解释器执行，向终端输出一行文字。
+print(&quot;Hello，小黑框。&quot;)</code></pre>
+<p>再跑：</p>
+<pre><code class="language-bat">python Hello.py</code></pre>
+<p>基础四件套：<code>dir</code> 看这层有啥，<code>cd 文件夹</code> 进去，<code>cd ..</code> 出来，<code>cls</code> 擦干净。</p>
+<p><code>Tab</code> 补全，<code>↑</code> 翻上一条，<code>F7</code> 看历史命令。程序跑飞了先 <code>Ctrl+C</code>，别拔电源，那是上个世纪的真男人。</p>
+<h2>05 装包、看家底、换电脑</h2>
+<pre><code class="language-bat">python -m pip install 包名 -i https://pypi.tuna.tsinghua.edu.cn/simple
+python -m pip list
+python -m pip freeze &gt; requirements.txt</code></pre>
+<p>换电脑先装合适版本的 Python，再创建、激活新环境，然后：</p>
+<pre><code class="language-bat">python -m pip install -r requirements.txt</code></pre>
+<p>这能恢复清单里的 Python 包；系统库、驱动和外部服务还得另配。<code>myvenv</code> 就别整个塞网盘了，交代码、必要数据、依赖清单和运行说明，别交半个硬盘。</p>
+<h2>06 echo 一把梭</h2>
+<pre><code class="language-bat">echo print^(&quot;Hello CMD&quot;^) &gt; Hello.py
+echo print^(&quot;Still here&quot;^) &gt;&gt; Hello.py
+type Hello.py
+python Hello.py</code></pre>
+<p><code>&gt;</code> 覆盖，<code>&gt;&gt;</code> 追加。括号、<code>&amp;</code>、<code>|</code>、<code>%</code> 等字符要结合 CMD 的解析和转义规则处理。写长代码还是 <code>notepad 文件名</code>，省下来的命拿去写功能。</p>
+<p>中文乱码可以先试 <code>chcp 65001</code>，但它改的是当前控制台代码页，<strong>不会把已有文件自动变成 UTF-8</strong>。<code>echo</code> 重定向的编码也受运行方式影响，别一口咬死永远是 GBK。中文代码文件直接在编辑器里保存为 UTF-8，更省事。</p>
+<p>报错从最后一行的异常类型和提示开始看，再顺着堆栈回到自己的文件与行号。最后一行给线索，上面有案发现场，不能只看一句就结案。</p>
+<h2>07 JavaScript：把 Node.js 叫出来</h2>
+<p>先看看人到了没有：</p>
+<pre><code class="language-bat">where node
+node --version
+npm.cmd --version</code></pre>
+<p>直接输入 <code>node</code>，会进入交互式解释环境 REPL。敲 <code>1 + 1</code> 试试，输入 <code>.exit</code> 回到 CMD。<a href="https://nodejs.org/learn/command-line/how-to-use-the-nodejs-repl">Node.js：REPL</a></p>
+<p>要写文件就 <code>notepad New.js</code>，保存下面这份：</p>
+<pre><code class="language-javascript">/*
+主题：用 Node.js 执行脚本；无外部输入。
+结构与调用树：文件入口 → main → Device.constructor / Device.showName。
+数据流：字符串 &quot;X220&quot; → device.name → 终端输出。
+运行：node New.js；只用标准运行时，不需要第三方包。
+*/
+class Device
+{
+    constructor(name)
+    {
+        this.name = name;
+    }
+
+    showName()
+    {
+        console.log(this.name);
+    }
+}
+
+function main()
+{
+    const device = new Device(&quot;X220&quot;);
+    device.showName();
+}
+
+main();</code></pre>
+<p>在文件所在目录运行，输出 <code>X220</code>：</p>
+<pre><code class="language-bat">node New.js</code></pre>
+<p>没配 PATH 也能直接用绝对路径。下面以本机的位置举例：</p>
+<pre><code class="language-bat">&quot;C:\nodejs\node.exe&quot; New.js</code></pre>
+<p>就这么叫。一个只用运行时本身的脚本，连 <code>npm init</code> 都不用先来一遍。<a href="https://nodejs.org/learn/command-line/run-nodejs-scripts-from-the-command-line">Node.js：从命令行运行脚本</a></p>
+<h2>08 HTML 带 JS：先把网页搭起来</h2>
+<p>网页里的 JS 交给浏览器执行。先建一个文件夹，放这两个文件：</p>
+<pre><code class="language-text">web-demo/
+├── index.html    浏览器读取的页面
+└── app.js        页面加载后执行的 JS
+
+数据流：浏览器请求 HTML → 解析页面 → 加载 app.js → main 修改页面文字
+调用树：浏览器执行 app.js → main → document.getElementById（浏览器 API）</code></pre>
+<p><code>index.html</code>：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;小黑框网页&lt;/title&gt;
+    &lt;script src=&quot;./app.js&quot; defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p id=&quot;message&quot;&gt;等 JS 开工。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<p><code>app.js</code>：</p>
+<pre><code class="language-javascript">/*
+主题：浏览器加载脚本，更新一段文本。
+输入：index.html 中 id 为 message 的元素。
+调用树：脚本入口 → main → document.getElementById（浏览器 API）。
+数据流：固定字符串 → 元素的 textContent → 页面显示。
+运行：浏览器打开配套页面；defer 让脚本在 HTML 解析后执行。
+*/
+function main()
+{
+    const message = document.getElementById(&quot;message&quot;);
+    message.textContent = &quot;浏览器里的 JS，开工。&quot;;
+}
+
+main();</code></pre>
+<p>普通的简单页面可以先双击 HTML 看。但模块、资源请求等场景有浏览器的来源限制，开个本地 HTTP 服务会更接近网页正常运行的环境。这里的 <code>document</code> 来自浏览器；把 <code>app.js</code> 直接丢给普通 Node 脚本运行，会遇到 <code>document is not defined</code>。<a href="https://nodejs.org/learn/getting-started/differences-between-nodejs-and-the-browser">Node.js：与浏览器的区别</a>、<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script">MDN：script 与 defer</a></p>
+<h2>09 开 HTTP 服务：把当前文件夹递给浏览器</h2>
+<p>先 <code>cd /d</code> 进入 <code>web-demo</code>。原始参考命令是：</p>
+<pre><code class="language-bat">npx.cmd http-server . -p 8000 -c-1</code></pre>
+<p>这会借 Node.js 启动第三方工具 <code>http-server</code>。本篇固定使用 14.1.1，并明确只监听本机回环地址：</p>
+<pre><code class="language-bat">npx.cmd http-server@14.1.1 . -p 8000 -c-1 -a 127.0.0.1</code></pre>
+<ul>
+<li><code>npx.cmd</code>：执行 npm 工具；缺少对应包时可能提示下载，首次使用需要网络。</li>
+<li><code>http-server@14.1.1</code>：工具名和固定版本。<code>http-sever</code> 少了一个 <code>r</code>，npm 可不会替你猜。</li>
+<li><code>.</code>：把当前文件夹作为服务根目录；换成指定目录，也能从别处启动。</li>
+<li><code>-p 8000</code>：监听 8000 端口。手动选端口用 1～65535，80000 就别写了。</li>
+<li><code>-c-1</code>：关闭这个服务的缓存设置，方便调试；它不会替你把浏览器里已有的所有缓存清空。</li>
+<li><code>-a 127.0.0.1</code>：只接受本机访问。本篇用它看自己的网页。</li>
+</ul>
+<p>参数和默认页面行为见 <a href="https://github.com/http-party/http-server">http-server 项目说明</a>，包的查找和执行方式见 <a href="https://docs.npmjs.com/cli/v11/commands/npx/">npm：npx</a>。</p>
+<p>服务窗口先留着，浏览器打开 <code>http://127.0.0.1:8000/</code>。也可以另开一个 CMD：</p>
+<pre><code class="language-bat">start &quot;&quot; &quot;http://127.0.0.1:8000/&quot;</code></pre>
+<p>请求 <code>/</code> 时，工具会优先提供目录里的 <code>index.html</code>。想看别的文件就直接访问 <code>http://127.0.0.1:8000/其他文件.html</code>。服务根目录由传入的路径决定；监听地址决定从哪里能连接，两个参数管两件事。</p>
+<pre><code class="language-text">CMD → npx → Node.js 运行 http-server → 监听 127.0.0.1:8000
+浏览器 → GET / → 服务读取 index.html → 返回页面
+浏览器 → GET /app.js → 服务返回 JS → 浏览器执行 JS、更新页面</code></pre>
+<p>这个服务负责传文件。它不会替你执行页面里的 JS，更不会因为目录里有 <code>.py</code>、<code>.java</code> 就顺手把它们跑起来。端口占用就换成 8001，访问地址也跟着改；收工在服务窗口按 <code>Ctrl+C</code>。</p>
+<h3>已经有 Python？也能开</h3>
+<pre><code class="language-bat">&quot;C:\Python3_14\python.exe&quot; -m http.server 8000 --bind 127.0.0.1</code></pre>
+<p>同样先进入网页文件夹，再访问刚才的地址。这是 Python 标准库的另一个服务，参数跟 npm 那个工具各算各的，别把 <code>-c-1</code> 搬过来。两条路选一条，别抢同一个端口。<a href="https://docs.python.org/3.14/library/http.server.html">Python：http.server</a></p>
+<h2>10 Java：编译器和运行器分开点名</h2>
+<p>Java 的原始参考就是这两句，本机 JDK 放在 <code>D:\JDK</code>，没有配置 Java 的 PATH：</p>
+<pre><code class="language-bat">&quot;D:\JDK\bin\javac.exe&quot; New.java
+&quot;D:\JDK\bin\java.exe&quot; New</code></pre>
+<p>先进入保存 <code>New.java</code> 的目录。<code>javac.exe</code> 把源代码编译为 <code>.class</code> 字节码；<code>java.exe</code> 启动 JVM，再加载入口类。<strong><code>New</code> 是类名，注意大小写。</strong></p>
+<p>先用 <code>notepad New.java</code> 写下面这份，保存为 UTF-8：</p>
+<pre><code class="language-java">/*
+主题：用 JDK 编译并运行一个类；无外部输入。
+结构与调用树：JVM → New.main → System.out.println（标准库）。
+数据流：固定字符串 → 标准输出 → 终端。
+运行：javac -encoding UTF-8 New.java，然后 java -cp . New。
+*/
+public class New
+{
+    public static void main(String[] args)
+    {
+        System.out.println(&quot;Java，小黑框开工。&quot;);
+    }
+}</code></pre>
+<p>明确指定源码编码和类查找位置，来一套：</p>
+<pre><code class="language-bat">&quot;D:\JDK\bin\javac.exe&quot; -encoding UTF-8 New.java
+&quot;D:\JDK\bin\java.exe&quot; -cp . New</code></pre>
+<p><code>public class New</code> 对应文件 <code>New.java</code>；这里没有写 <code>package</code>。<code>-cp .</code> 表示到当前目录找类。运行编译产物时写 <code>New</code>，不要写 <code>New.class</code>。<a href="https://docs.oracle.com/en/java/javase/25/docs/specs/man/javac.html">Oracle：javac</a>、<a href="https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html">Oracle：java</a></p>
+<pre><code class="language-text">New.java → javac -encoding UTF-8 → New.class → java -cp . New → New.main → 终端</code></pre>
+<p>想把编译产物另放一个目录：</p>
+<pre><code class="language-bat">&quot;D:\JDK\bin\javac.exe&quot; -encoding UTF-8 -d out New.java
+&quot;D:\JDK\bin\java.exe&quot; -cp out New</code></pre>
+<p>源代码改了，就重新编译。编译失败先处理错误，别接着跑旧 <code>.class</code>，然后怀疑自己刚才改了个寂寞。</p>
+<h3>懒得总敲绝对路径？当前窗口临时加 PATH</h3>
+<pre><code class="language-bat">set &quot;PATH=D:\JDK\bin;%PATH%&quot;
+javac -version
+java -version</code></pre>
+<p>这条 <code>set</code> 只影响当前 CMD 及它之后启动的子进程。关掉窗口就没了，正适合临时干活。</p>
+<p>现代 JDK 还支持源码文件启动模式，例如这份单文件小程序可以用 <code>&quot;D:\JDK\bin\java.exe&quot; New.java</code> 直接启动。那是另一个启动模式，仍涉及编译；先把上面的两步看明白，再偷懒也不迟。<a href="https://docs.oracle.com/en/java/javase/25/docs/specs/man/java.html#using-source-file-mode-to-launch-source-code-programs">Oracle：源码文件启动模式</a></p>
+<h2>11 把三个家伙摆一排</h2>
+<pre><code class="language-text">Python 脚本：   python.exe → Hello.py → 终端输出
+Node.js 脚本：  node.exe → New.js → 终端输出
+浏览器网页：    HTTP 服务 → HTML / JS 文件 → 浏览器执行 → 页面变化
+Java 程序：    javac.exe → New.class → java.exe → New.main → 终端输出</code></pre>
+<p>工具找不到就检查 PATH，或者直接写程序绝对路径；文件找不到就看当前目录和文件名；端口占用就换端口；页面没变就看看请求的文件、控制台报错和缓存。</p>
+<p>把这几个东西认清楚，以后 IDE 帮你按按钮时，你也知道它在背后叫谁干活。</p>
+<section class="manifesto">
+<h2>12 收工宣言</h2>
+<p>小黑框就是我的 IDE，notepad 就是我的编辑器。</p>
+<p>括号转义查三遍，编码错了再敲一遍。</p>
+<p><strong>人生不过三万天，能豪一天是一天。</strong></p>
+</section>
+<hr>
+<p>原稿、后补内容及两份 JS / Java 参考保存在 seed。v2 在这些材料上扩展，技术修正不反向覆盖原话；HTML 与本 Markdown 同步维护。</p>
+<footer>CoMind · 命令行学习手册 · 2026-10-27 · 正文与同名 Markdown 同步</footer>
+</main>
+</body>
+</html>
